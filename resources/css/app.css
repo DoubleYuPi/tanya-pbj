@@ -1,0 +1,47 @@
+@import "tailwindcss";
+@import "tailwindcss-animate" layer(utilities);
+
+@source "../views";
+@source "../js";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+
+  /* Tanya PBJ identity: professional government navy + emerald accent.
+     Original palette — not derived from any consultation-app reference
+     used for UX inspiration (spec Part 4/5). */
+  --color-navy-50: #eef2f9;
+  --color-navy-100: #d7e1f0;
+  --color-navy-500: #1e3a66;
+  --color-navy-600: #16294a;
+  --color-navy-700: #101d36;
+  --color-navy-900: #0a1424;
+
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #059669;
+
+  --color-background: #f8fafc;
+  --color-foreground: var(--color-navy-900);
+
+  --color-primary: var(--color-navy-600);
+  --color-primary-foreground: #ffffff;
+  --color-secondary: var(--color-emerald-500);
+  --color-secondary-foreground: #ffffff;
+
+  --color-muted: #eef1f6;
+  --color-muted-foreground: #5b6579;
+  --color-border: #e2e6ee;
+
+  --radius: 0.75rem;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+}

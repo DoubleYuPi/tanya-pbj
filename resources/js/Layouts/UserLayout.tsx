@@ -1,0 +1,15 @@
+import { PropsWithChildren } from 'react';
+import DashboardShell, { NavItem } from '@/Components/Nav/DashboardShell';
+import { LayoutDashboard, MessageCircleQuestion, ScrollText, UserCircle, Bookmark } from 'lucide-react';
+
+const navItems: NavItem[] = [
+    { label: 'Dashboard', href: route('dashboard'), icon: LayoutDashboard },
+    { label: 'Tanya Admin', href: route('dashboard'), icon: MessageCircleQuestion },
+    { label: 'Peraturan', href: route('dashboard'), icon: ScrollText },
+    { label: 'Peraturan Tersimpan', href: route('dashboard'), icon: Bookmark },
+    { label: 'Profil Saya', href: route('profile.edit'), icon: UserCircle },
+];
+
+export default function UserLayout({ children }: PropsWithChildren) {
+    return <DashboardShell navItems={navItems}>{children}</DashboardShell>;
+}
