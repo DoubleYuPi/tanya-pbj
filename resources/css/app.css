@@ -1,8 +1,9 @@
 @import "tailwindcss";
 @plugin "tailwindcss-animate";
 
-@source "../views";
-@source "../js";
+@source "../views/**/*.blade.php";
+@source "../js/**/*.tsx";
+@source "../js/**/*.ts";
 
 @theme {
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
