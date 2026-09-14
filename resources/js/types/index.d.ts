@@ -4,6 +4,8 @@ export interface User {
     email: string;
     role: 'super_admin' | 'admin' | 'user';
     email_verified_at: string | null;
+    phone: string | null;
+    satuan_kerja: string | null;
 }
 
 export interface Flash {

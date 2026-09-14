@@ -15,6 +15,7 @@ class ProfileController extends Controller
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail,
             'status' => session('status'),
+            'satuanKerjaOptions' => config('satuan_kerja.list'),
         ]);
     }
 

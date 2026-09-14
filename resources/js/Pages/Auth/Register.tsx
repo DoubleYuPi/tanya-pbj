@@ -6,11 +6,12 @@ import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
 
-export default function Register() {
+export default function Register({ satuanKerjaOptions }: { satuanKerjaOptions: string[] }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
         phone: '',
+        satuan_kerja: '',
         password: '',
         password_confirmation: '',
     });
@@ -49,6 +50,22 @@ export default function Register() {
                     <Input id="phone" className="mt-1" value={data.phone} autoComplete="tel"
                         onChange={(e) => setData('phone', e.target.value)} />
                     <InputError message={errors.phone} className="mt-1" />
+                </div>
+
+                <div>
+                    <Label htmlFor="satuan_kerja">Nama Satuan Kerja</Label>
+                    <select
+                        id="satuan_kerja"
+                        className="mt-1 flex h-10 w-full rounded-lg border border-[var(--color-border)] bg-white px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] disabled:cursor-not-allowed disabled:opacity-50"
+                        value={data.satuan_kerja}
+                        onChange={(e) => setData('satuan_kerja', e.target.value)}
+                    >
+                        <option value="" disabled>Pilih satuan kerja Anda...</option>
+                        {satuanKerjaOptions.map((unit) => (
+                            <option key={unit} value={unit}>{unit}</option>
+                        ))}
+                    </select>
+                    <InputError message={errors.satuan_kerja} className="mt-1" />
                 </div>
 
                 <div>

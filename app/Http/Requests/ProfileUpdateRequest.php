@@ -13,6 +13,7 @@ class ProfileUpdateRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'phone' => ['nullable', 'string', 'max:20'],
+            'satuan_kerja' => ['nullable', 'string', Rule::in(config('satuan_kerja.list'))],
             'email' => [
                 'required', 'string', 'lowercase', 'email', 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),

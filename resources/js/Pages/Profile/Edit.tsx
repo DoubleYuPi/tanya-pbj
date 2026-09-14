@@ -15,14 +15,15 @@ import { PageProps } from '@/types';
 // having three near-duplicate profile pages.
 const LAYOUTS = { user: UserLayout, admin: AdminLayout, super_admin: SuperAdminLayout } as const;
 
-export default function Edit({ mustVerifyEmail }: { mustVerifyEmail: boolean }) {
+export default function Edit({ mustVerifyEmail, satuanKerjaOptions }: { mustVerifyEmail: boolean; satuanKerjaOptions: string[] }) {
     const { auth } = usePage<PageProps>().props;
     const Layout = LAYOUTS[auth.user?.role ?? 'user'];
 
     const { data, setData, patch, processing, errors, recentlySuccessful } = useForm({
         name: auth.user?.name ?? '',
         email: auth.user?.email ?? '',
-        phone: '',
+        phone: auth.user?.phone ?? '',
+        satuan_kerja: auth.user?.satuan_kerja ?? '',
     });
 
     const submit: FormEventHandler = (e) => {
@@ -56,6 +57,21 @@ export default function Edit({ mustVerifyEmail }: { mustVerifyEmail: boolean }) 
                             <Label htmlFor="phone">Nomor Telepon</Label>
                             <Input id="phone" className="mt-1" value={data.phone} onChange={(e) => setData('phone', e.target.value)} />
                             <InputError message={errors.phone} className="mt-1" />
+                        </div>
+                        <div>
+                            <Label htmlFor="satuan_kerja">Nama Satuan Kerja</Label>
+                            <select
+                                id="satuan_kerja"
+                                className="mt-1 flex h-10 w-full rounded-lg border border-[var(--color-border)] bg-white px-3 py-2 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
+                                value={data.satuan_kerja}
+                                onChange={(e) => setData('satuan_kerja', e.target.value)}
+                            >
+                                <option value="">Pilih satuan kerja Anda...</option>
+                                {satuanKerjaOptions.map((unit) => (
+                                    <option key={unit} value={unit}>{unit}</option>
+                                ))}
+                            </select>
+                            <InputError message={errors.satuan_kerja} className="mt-1" />
                         </div>
 
                         {mustVerifyEmail && auth.user?.email_verified_at === null && (
