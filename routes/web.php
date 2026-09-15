@@ -36,17 +36,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 |   /chat, /chat/{conversation}                                 → Phase 5
 |   /admin/users, /admin/admins, /admin/peraturan, /admin/categories,
 |   /admin/audit-logs, /admin/settings                          → Phase 7
-| The role-scoped groups below exist now so AppLayout's nav links and the
-| role middleware are already correct; only the dashboard route inside
-| each group is wired up so far.
+|
+| Note: the spec's Part 29 and Part 30 both assign "/admin/dashboard" to
+| two different roles (Super Admin and Admin). Resolved here by following
+| Part 41's explicit route table, which only lists /admin/dashboard under
+| Admin — Super Admin's dashboard is the shared, role-aware /dashboard
+| above (DashboardController already renders the right page per role),
+| so there's no need for a second URL just for that role.
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', fn () => Inertia::render('Dashboard/Admin'))->name('dashboard');
-});
-
-Route::middleware(['auth', 'verified', 'role:super_admin'])->prefix('admin')->name('super-admin.')->group(function () {
-    Route::get('/super-dashboard', fn () => Inertia::render('Dashboard/SuperAdmin'))->name('dashboard');
 });
 
 require __DIR__.'/auth.php';
