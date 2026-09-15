@@ -29,18 +29,19 @@ export default function Landing() {
                             <Link href={route('register')}>Mulai Konsultasi</Link>
                         </Button>
                         <Button size="lg" variant="outline" className="bg-transparent text-white hover:bg-white/10" asChild>
-                            <a href="#peraturan">Cari Peraturan</a>
+                            <Link href={route('regulations.index')}>Cari Peraturan</Link>
                         </Button>
                     </div>
 
-                    <div className="mx-auto mt-8 flex max-w-xl items-center gap-2 rounded-xl bg-white p-2 shadow-lg">
+                    <form action={route('regulations.index')} method="get" className="mx-auto mt-8 flex max-w-xl items-center gap-2 rounded-xl bg-white p-2 shadow-lg">
                         <Search className="ml-2 h-5 w-5 text-[var(--color-muted-foreground)]" />
                         <Input
+                            name="search"
                             className="border-0 shadow-none focus-visible:ring-0"
                             placeholder="Cari peraturan, nomor, topik, atau kata kunci..."
                         />
-                        <Button>Cari</Button>
-                    </div>
+                        <Button type="submit">Cari</Button>
+                    </form>
                 </div>
             </section>
 
@@ -77,8 +78,11 @@ export default function Landing() {
             <section id="peraturan" className="mx-auto max-w-6xl px-4 py-12">
                 <h2 className="text-2xl font-bold text-[var(--color-navy-700)]">Peraturan Populer</h2>
                 <p className="mt-1 text-sm text-[var(--color-muted-foreground)]">
-                    Pustaka peraturan lengkap dengan pencarian dan unduhan hadir di Phase 3.
+                    Telusuri seluruh Perpres, Permen, Perda, dan regulasi pengadaan lainnya.
                 </p>
+                <Button className="mt-4" variant="outline" asChild>
+                    <Link href={route('regulations.index')}>Lihat Semua Peraturan</Link>
+                </Button>
             </section>
         </PublicLayout>
     );

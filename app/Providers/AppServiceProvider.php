@@ -6,7 +6,10 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use App\Models\Regulation;
+use App\Policies\RegulationPolicy;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,7 +31,8 @@ class AppServiceProvider extends ServiceProvider
         // Carried over from the old EventServiceProvider's $listen array.
         Event::listen(Registered::class, SendEmailVerificationNotification::class);
 
-        // Gate::policy(...) calls for Conversation/Regulation land here in
-        // Phase 3/5 once those models and policies exist.
+        Gate::policy(Regulation::class, RegulationPolicy::class);
+
+        // Gate::policy(Conversation::class, ...) lands here in Phase 5.
     }
 }

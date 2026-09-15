@@ -56,6 +56,22 @@ return [
             'throw' => false,
         ],
 
+        // Regulation PDFs (spec Part 23) — never in /public, always served
+        // through an authorized controller route instead of a direct URL.
+        'regulations' => [
+            'driver' => 'local',
+            'root' => storage_path('app/regulations'),
+            'throw' => false,
+        ],
+
+        // Chat attachments land here in Phase 5, kept separate from
+        // regulations so the two authorization rules never get conflated.
+        'attachments' => [
+            'driver' => 'local',
+            'root' => storage_path('app/attachments'),
+            'throw' => false,
+        ],
+
     ],
 
     /*

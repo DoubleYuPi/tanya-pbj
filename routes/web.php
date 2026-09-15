@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\RegulationCategoryController;
+use App\Http\Controllers\Admin\RegulationController as AdminRegulationController;
+use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RegulationController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -13,6 +17,22 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('Landing');
 })->name('landing');
+
+// Regulation library is public (Part 20/21 — public government
+// information); only bookmarking requires an account (Part 26). Placed
+// above the bookmarks route so "/peraturan/tersimpan" isn't swallowed by
+// the "/peraturan/{regulation}" wildcard.
+Route::get('/peraturan', [RegulationController::class, 'index'])->name('regulations.index');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/peraturan/tersimpan', [BookmarkController::class, 'index'])->name('regulations.bookmarks');
+    Route::post('/peraturan/{regulation}/bookmark', [BookmarkController::class, 'store'])->name('regulations.bookmark');
+    Route::delete('/peraturan/{regulation}/bookmark', [BookmarkController::class, 'destroy'])->name('regulations.unbookmark');
+});
+
+Route::get('/peraturan/{regulation}', [RegulationController::class, 'show'])->name('regulations.show');
+Route::get('/peraturan/{regulation}/download', [RegulationController::class, 'download'])->name('regulations.download');
+Route::get('/peraturan/{regulation}/preview', [RegulationController::class, 'preview'])->name('regulations.preview');
 
 /*
 |--------------------------------------------------------------------------
@@ -31,11 +51,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 |--------------------------------------------------------------------------
 | Reserved route groups per the spec's route map (Part 41).
 | Controllers/pages for these land in later phases:
-|   /peraturan, /peraturan/{regulation}, /peraturan/tersimpan  → Phase 3
 |   /admins, /admins/{admin}                                    → Phase 4
 |   /chat, /chat/{conversation}                                 → Phase 5
-|   /admin/users, /admin/admins, /admin/peraturan, /admin/categories,
-|   /admin/audit-logs, /admin/settings                          → Phase 7
+|   /admin/users, /admin/admins, /admin/audit-logs, /admin/settings → Phase 7
 |
 | Note: the spec's Part 29 and Part 30 both assign "/admin/dashboard" to
 | two different roles (Super Admin and Admin). Resolved here by following
@@ -47,6 +65,28 @@ Route::middleware(['auth', 'verified'])->group(function () {
 */
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', fn () => Inertia::render('Dashboard/Admin'))->name('dashboard');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Super Admin regulation CMS (Part 23/24) — deliberately its own
+| 'role:super_admin' group rather than reusing the 'admin' group above,
+| since a plain Admin must NOT be able to upload/edit/delete regulations.
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'verified', 'role:super_admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/peraturan', [AdminRegulationController::class, 'index'])->name('regulations.index');
+    Route::get('/peraturan/create', [AdminRegulationController::class, 'create'])->name('regulations.create');
+    Route::post('/peraturan', [AdminRegulationController::class, 'store'])->name('regulations.store');
+    Route::get('/peraturan/{regulation}/edit', [AdminRegulationController::class, 'edit'])->name('regulations.edit');
+    Route::put('/peraturan/{regulation}', [AdminRegulationController::class, 'update'])->name('regulations.update');
+    Route::delete('/peraturan/{regulation}', [AdminRegulationController::class, 'destroy'])->name('regulations.destroy');
+    Route::get('/peraturan/{regulation}/download', [AdminRegulationController::class, 'download'])->name('regulations.download');
+
+    Route::get('/categories', [RegulationCategoryController::class, 'index'])->name('categories.index');
+    Route::post('/categories', [RegulationCategoryController::class, 'store'])->name('categories.store');
+    Route::put('/categories/{category}', [RegulationCategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{category}', [RegulationCategoryController::class, 'destroy'])->name('categories.destroy');
 });
 
 require __DIR__.'/auth.php';

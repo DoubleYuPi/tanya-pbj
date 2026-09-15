@@ -5,7 +5,8 @@ import { LayoutDashboard, Users, ScrollText, ShieldAlert, Settings, UserCircle }
 const navItems: NavItem[] = [
     { label: 'Dashboard', href: route('dashboard'), icon: LayoutDashboard },
     { label: 'Manajemen Pengguna', href: route('dashboard'), icon: Users },
-    { label: 'Manajemen Peraturan', href: route('dashboard'), icon: ScrollText },
+    { label: 'Manajemen Peraturan', href: route('admin.regulations.index'), icon: ScrollText },
+    { label: 'Kategori Peraturan', href: route('admin.categories.index'), icon: ScrollText },
     { label: 'Audit Log', href: route('dashboard'), icon: ShieldAlert },
     { label: 'Pengaturan', href: route('dashboard'), icon: Settings },
     { label: 'Profil Saya', href: route('profile.edit'), icon: UserCircle },

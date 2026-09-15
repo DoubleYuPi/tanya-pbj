@@ -5,7 +5,7 @@ import { LayoutDashboard, MessageCircleQuestion, ScrollText, UserCircle } from '
 const navItems: NavItem[] = [
     { label: 'Dashboard', href: route('admin.dashboard'), icon: LayoutDashboard },
     { label: 'Percakapan', href: route('admin.dashboard'), icon: MessageCircleQuestion },
-    { label: 'Peraturan', href: route('admin.dashboard'), icon: ScrollText },
+    { label: 'Peraturan', href: route('regulations.index'), icon: ScrollText },
     { label: 'Profil Saya', href: route('profile.edit'), icon: UserCircle },
 ];
 

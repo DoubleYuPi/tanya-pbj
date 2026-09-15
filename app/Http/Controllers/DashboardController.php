@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Regulation;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -15,9 +16,13 @@ class DashboardController extends Controller
         $user = $request->user();
 
         return match ($user->role) {
-            'super_admin' => Inertia::render('Dashboard/SuperAdmin'),
+            'super_admin' => Inertia::render('Dashboard/SuperAdmin', [
+                'stats' => ['totalRegulations' => Regulation::count()],
+            ]),
             'admin' => Inertia::render('Dashboard/Admin'),
-            default => Inertia::render('Dashboard/User'),
+            default => Inertia::render('Dashboard/User', [
+                'stats' => ['savedRegulations' => $user->bookmarkedRegulations()->count()],
+            ]),
         };
     }
 }
