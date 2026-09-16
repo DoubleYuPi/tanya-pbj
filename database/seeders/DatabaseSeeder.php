@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RegulationCategorySeeder::class,
             RegulationSeeder::class,
+            AdminSeeder::class,
         ]);
     }
 }

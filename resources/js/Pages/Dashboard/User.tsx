@@ -5,8 +5,18 @@ import { Button } from '@/Components/ui/button';
 import { PageProps } from '@/types';
 import { MessageCircleQuestion, ScrollText, History, Bookmark } from 'lucide-react';
 
+interface AvailableAdmin {
+    id: number;
+    name: string;
+    position: string | null;
+    organization: string | null;
+}
+
 export default function UserDashboard() {
-    const { auth, stats } = usePage<PageProps<{ stats: { savedRegulations: number } }>>().props;
+    const { auth, stats, availableAdmins } = usePage<PageProps<{
+        stats: { savedRegulations: number };
+        availableAdmins: AvailableAdmin[];
+    }>>().props;
 
     return (
         <UserLayout>
@@ -35,7 +45,9 @@ export default function UserDashboard() {
             </div>
 
             <div className="mt-6 flex flex-wrap gap-3">
-                <Button><MessageCircleQuestion className="h-4 w-4" /> Tanya Admin</Button>
+                <Button asChild>
+                    <Link href={route('admins.index')}><MessageCircleQuestion className="h-4 w-4" /> Tanya Admin</Link>
+                </Button>
                 <Button variant="outline" asChild>
                     <Link href={route('regulations.index')}><ScrollText className="h-4 w-4" /> Cari Peraturan</Link>
                 </Button>
@@ -48,9 +60,28 @@ export default function UserDashboard() {
             <Card className="mt-8">
                 <CardHeader><CardTitle>Admin yang tersedia</CardTitle></CardHeader>
                 <CardContent>
-                    <p className="text-sm text-[var(--color-muted-foreground)]">
-                        Direktori admin dan alur mulai-konsultasi hadir di Phase 4 (Admin System) dari rencana pengembangan.
-                    </p>
+                    {availableAdmins.length === 0 ? (
+                        <p className="text-sm text-[var(--color-muted-foreground)]">
+                            Saat ini tidak ada admin yang tersedia. Silakan cek kembali nanti.
+                        </p>
+                    ) : (
+                        <ul className="space-y-3">
+                            {availableAdmins.map((admin) => (
+                                <li key={admin.id} className="flex items-center justify-between">
+                                    <div>
+                                        <p className="font-medium">{admin.name}</p>
+                                        <p className="text-xs text-[var(--color-muted-foreground)]">{admin.position} · {admin.organization}</p>
+                                    </div>
+                                    <Button size="sm" variant="outline" asChild>
+                                        <Link href={route('admins.show', admin.id)}>Lihat Profil</Link>
+                                    </Button>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                    <Button className="mt-4" variant="link" asChild>
+                        <Link href={route('admins.index')}>Lihat Semua Admin →</Link>
+                    </Button>
                 </CardContent>
             </Card>
         </UserLayout>

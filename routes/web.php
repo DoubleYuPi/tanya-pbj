@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\RegulationCategoryController;
 use App\Http\Controllers\Admin\RegulationController as AdminRegulationController;
+use App\Http\Controllers\AdminDirectoryController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
@@ -17,6 +19,11 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('Landing');
 })->name('landing');
+
+// Admin directory (spec Part 14/15) is public browsing — only starting an
+// actual consultation (Phase 5) needs an account.
+Route::get('/admins', [AdminDirectoryController::class, 'index'])->name('admins.index');
+Route::get('/admins/{admin}', [AdminDirectoryController::class, 'show'])->name('admins.show');
 
 // Regulation library is public (Part 20/21 — public government
 // information); only bookmarking requires an account (Part 26). Placed
@@ -51,8 +58,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 |--------------------------------------------------------------------------
 | Reserved route groups per the spec's route map (Part 41).
 | Controllers/pages for these land in later phases:
-|   /admins, /admins/{admin}                                    → Phase 4
 |   /chat, /chat/{conversation}                                 → Phase 5
+|   /admin/chat, /admin/chat/{conversation}                     → Phase 5
 |   /admin/users, /admin/admins, /admin/audit-logs, /admin/settings → Phase 7
 |
 | Note: the spec's Part 29 and Part 30 both assign "/admin/dashboard" to
@@ -65,6 +72,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 */
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', fn () => Inertia::render('Dashboard/Admin'))->name('dashboard');
+
+    Route::get('/profile', [AdminProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [AdminProfileController::class, 'update'])->name('profile.update');
+    Route::patch('/availability', [AdminProfileController::class, 'updateStatus'])->name('availability.update');
 });
 
 /*
