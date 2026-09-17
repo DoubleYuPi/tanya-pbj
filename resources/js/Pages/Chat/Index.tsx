@@ -1,5 +1,5 @@
 import { Head, Link, router, usePage } from '@inertiajs/react';
-import { FormEventHandler, useRef, useState } from 'react';
+import { FormEventHandler, useEffect, useRef, useState } from 'react';
 import UserLayout from '@/Layouts/UserLayout';
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Button } from '@/Components/ui/button';
@@ -65,6 +65,49 @@ export default function ChatIndex() {
     const [body, setBody] = useState('');
     const [files, setFiles] = useState<File[]>([]);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const messagesEndRef = useRef<HTMLDivElement>(null);
+
+    // Messages that arrived over the websocket since this page rendered.
+    // Kept separate from the Inertia props so a partial reload doesn't
+    // duplicate them — the reload replaces `activeConversation.messages`
+    // with the full server-side list, at which point we clear these.
+    const [liveMessages, setLiveMessages] = useState<MessageData[]>([]);
+
+    useEffect(() => {
+        setLiveMessages([]);
+    }, [activeConversation?.id, activeConversation?.messages.length]);
+
+    useEffect(() => {
+        if (!activeConversation) return;
+
+        const channel = window.Echo.private(`conversation.${activeConversation.id}`);
+
+        channel.listen('.message.sent', (e: { message: MessageData }) => {
+            setLiveMessages((prev) =>
+                prev.some((m) => m.id === e.message.id) ? prev : [...prev, e.message]
+            );
+        });
+
+        channel.listen('.conversation.updated', () => {
+            // Status changed on the other side — pull the authoritative
+            // state rather than guessing at it client-side.
+            router.reload({ only: ['activeConversation', 'conversations'] });
+        });
+
+        return () => {
+            window.Echo.leave(`conversation.${activeConversation.id}`);
+        };
+    }, [activeConversation?.id]);
+
+    const allMessages = activeConversation
+        ? [...activeConversation.messages, ...liveMessages.filter(
+            (lm) => !activeConversation.messages.some((m) => m.id === lm.id)
+          )]
+        : [];
+
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [allMessages.length]);
     const Layout = routePrefix === 'admin.chat' ? AdminLayout : UserLayout;
 
     const isResolved = activeConversation ? ['resolved', 'closed'].includes(activeConversation.status) : false;
@@ -161,7 +204,7 @@ export default function ChatIndex() {
                             </header>
 
                             <div className="flex-1 space-y-3 overflow-y-auto p-4">
-                                {activeConversation.messages.map((m) => {
+                                {allMessages.map((m) => {
                                     const mine = m.user_id === auth.user?.id;
                                     return (
                                         <div key={m.id} className={`flex ${mine ? 'justify-end' : 'justify-start'}`}>
@@ -187,6 +230,7 @@ export default function ChatIndex() {
                                         </div>
                                     );
                                 })}
+                                <div ref={messagesEndRef} />
                             </div>
 
                             {!isResolved && (

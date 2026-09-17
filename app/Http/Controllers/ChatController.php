@@ -72,7 +72,7 @@ class ChatController extends Controller
     {
         $this->authorize('markResolved', $conversation);
 
-        $this->conversations->markResolved($conversation);
+        $this->conversations->markResolved($conversation, $request->user());
 
         return back()->with('success', 'Percakapan ditandai selesai.');
     }

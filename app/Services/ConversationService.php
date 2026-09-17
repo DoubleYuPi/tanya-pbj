@@ -2,10 +2,14 @@
 
 namespace App\Services;
 
+use App\Events\ConversationUpdated;
+use App\Events\MessageSent;
 use App\Models\Conversation;
 use App\Models\Message;
 use App\Models\MessageAttachment;
 use App\Models\User;
+use App\Notifications\ConversationResolvedNotification;
+use App\Notifications\NewMessageNotification;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -52,7 +56,7 @@ class ConversationService
      */
     public function postMessage(Conversation $conversation, User $sender, string $body, array $attachments = []): Message
     {
-        return DB::transaction(function () use ($conversation, $sender, $body, $attachments) {
+        $message = DB::transaction(function () use ($conversation, $sender, $body, $attachments) {
             $message = Message::create([
                 'conversation_id' => $conversation->id,
                 'user_id' => $sender->id,
@@ -83,15 +87,44 @@ class ConversationService
 
             return $message;
         });
+
+        // Broadcast + notify AFTER the transaction commits, so listeners
+        // never read a half-written conversation (spec Part 18's ordering:
+        // save → broadcast → notify).
+        broadcast(new MessageSent($message))->toOthers();
+
+        if ($recipient = $this->recipientFor($conversation, $sender)) {
+            $recipient->notify(new NewMessageNotification($message));
+        }
+
+        return $message;
     }
 
-    public function markResolved(Conversation $conversation): void
+    public function markResolved(Conversation $conversation, ?User $resolvedBy = null): void
     {
         $conversation->update(['status' => Conversation::STATUS_RESOLVED, 'resolved_at' => now()]);
+
+        broadcast(new ConversationUpdated($conversation))->toOthers();
+
+        if ($resolvedBy && $recipient = $this->recipientFor($conversation, $resolvedBy)) {
+            $recipient->notify(new ConversationResolvedNotification($conversation, $resolvedBy->name));
+        }
     }
 
     public function reopen(Conversation $conversation): void
     {
         $conversation->update(['status' => Conversation::STATUS_OPEN, 'resolved_at' => null]);
+
+        broadcast(new ConversationUpdated($conversation))->toOthers();
+    }
+
+    // The participant who ISN'T the actor — i.e. who should be notified.
+    private function recipientFor(Conversation $conversation, User $actor): ?User
+    {
+        $recipientId = $actor->id === $conversation->user_id
+            ? $conversation->admin_id
+            : $conversation->user_id;
+
+        return $recipientId ? User::find($recipientId) : null;
     }
 }

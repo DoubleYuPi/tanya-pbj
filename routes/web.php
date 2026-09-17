@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminDirectoryController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegulationController;
 use Illuminate\Support\Facades\Route;
@@ -58,6 +59,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // ConversationPolicy inside the controller handles authorization
     // regardless of which side is requesting, so one route covers both.
     Route::get('/chat/attachments/{attachment}/download', [ChatController::class, 'downloadAttachment'])->name('chat.attachments.download');
+
+    Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.readAll');
 });
 
 /*

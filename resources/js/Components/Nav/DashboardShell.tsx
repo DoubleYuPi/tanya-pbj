@@ -2,6 +2,7 @@ import { PropsWithChildren, useState } from 'react';
 import { Link, usePage } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import ApplicationLogo from '@/Components/ApplicationLogo';
+import NotificationBell from '@/Components/NotificationBell';
 import { Menu, X, LogOut, LucideIcon } from 'lucide-react';
 
 export interface NavItem {
@@ -63,6 +64,7 @@ export default function DashboardShell({ navItems, children }: PropsWithChildren
                     </button>
                     <div className="hidden lg:block" />
                     <div className="flex items-center gap-3">
+                        <NotificationBell />
                         <span className="text-sm font-medium">{auth.user?.name}</span>
                         <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-navy-100)] text-sm font-semibold text-[var(--color-navy-600)]">
                             {auth.user?.name?.charAt(0)}
