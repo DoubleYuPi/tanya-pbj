@@ -40,7 +40,7 @@ export default function Index() {
             </div>
 
             <form onSubmit={submitSearch} className="mt-4 flex max-w-md gap-2">
-                <Input placeholder="Cari nama atau email admin..." value={search} onChange={(e) => setSearch(e.target.value)} />
+                <Input placeholder="Cari nama atau email admin..." aria-label="Cari nama atau email admin" value={search} onChange={(e) => setSearch(e.target.value)} />
                 <Button type="submit" variant="outline">Cari</Button>
             </form>
 
@@ -81,7 +81,7 @@ export default function Index() {
                                 <td className="px-4 py-3">
                                     <div className="flex justify-end">
                                         <Button size="sm" variant="ghost" asChild>
-                                            <Link href={route('admin.admins.edit', a.id)}><Pencil className="h-4 w-4" /></Link>
+                                            <Link href={route('admin.admins.edit', a.id)} aria-label={`Edit ${a.name}`}><Pencil className="h-4 w-4" /></Link>
                                         </Button>
                                     </div>
                                 </td>

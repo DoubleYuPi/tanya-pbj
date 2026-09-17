@@ -59,6 +59,7 @@ export default function Index() {
                         <Input
                             className="pl-9"
                             placeholder="Cari peraturan, nomor, topik, atau kata kunci..."
+                            aria-label="Cari peraturan, nomor, topik, atau kata kunci"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                         />

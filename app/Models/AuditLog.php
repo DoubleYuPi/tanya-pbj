@@ -14,6 +14,7 @@ class AuditLog extends Model
     public const ACTION_REGULATION_CREATED = 'regulation.created';
     public const ACTION_REGULATION_UPDATED = 'regulation.updated';
     public const ACTION_REGULATION_DELETED = 'regulation.deleted';
+    public const ACTION_SETTINGS_UPDATED = 'settings.updated';
 
     protected $fillable = [
         'user_id',

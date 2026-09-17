@@ -44,7 +44,7 @@ export default function Index() {
             </p>
 
             <form onSubmit={submitSearch} className="mt-4 flex max-w-md gap-2">
-                <Input placeholder="Cari deskripsi atau pelaku..." value={search} onChange={(e) => setSearch(e.target.value)} />
+                <Input placeholder="Cari deskripsi atau pelaku..." aria-label="Cari deskripsi atau pelaku" value={search} onChange={(e) => setSearch(e.target.value)} />
                 <Button type="submit" variant="outline">Cari</Button>
             </form>
 

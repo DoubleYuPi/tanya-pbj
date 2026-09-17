@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\AuditLogController;
 use App\Http\Controllers\Admin\RegulationCategoryController;
 use App\Http\Controllers\Admin\RegulationController as AdminRegulationController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\StatisticsController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\AdminDirectoryController;
@@ -91,7 +92,7 @@ Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
 |--------------------------------------------------------------------------
 | Reserved route groups per the spec's route map (Part 41).
 | Controllers/pages for these land in later phases:
-|   /admin/settings → not yet implemented (Phase 8 / future)
+|   /admin/settings → implemented in Phase 8 (see SettingsController)
 |
 | Note: the spec's Part 29 and Part 30 both assign "/admin/dashboard" to
 | two different roles (Super Admin and Admin). Resolved here by following
@@ -143,6 +144,9 @@ Route::middleware(['auth', 'verified', 'role:super_admin'])->prefix('admin')->na
 
     Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('audit-logs.index');
     Route::get('/statistics', [StatisticsController::class, 'index'])->name('statistics.index');
+
+    Route::get('/settings', [SettingsController::class, 'edit'])->name('settings.edit');
+    Route::patch('/settings', [SettingsController::class, 'update'])->name('settings.update');
 
     Route::get('/categories', [RegulationCategoryController::class, 'index'])->name('categories.index');
     Route::post('/categories', [RegulationCategoryController::class, 'store'])->name('categories.store');

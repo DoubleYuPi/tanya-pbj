@@ -53,6 +53,7 @@ export default function Index() {
                         <Input
                             className="pl-9"
                             placeholder="Cari peraturan, nomor, topik, atau kata kunci..."
+                            aria-label="Cari peraturan, nomor, topik, atau kata kunci"
                             value={q}
                             onChange={(e) => setQ(e.target.value)}
                             autoFocus

@@ -38,7 +38,7 @@ export default function Landing() {
                         <Input
                             name="q"
                             className="border-0 shadow-none focus-visible:ring-0"
-                            placeholder="Cari peraturan, nomor, topik, atau kata kunci..."
+                            placeholder="Cari peraturan, nomor, topik, atau kata kunci..." aria-label="Cari peraturan, nomor, topik, atau kata kunci"
                         />
                         <Button type="submit">Cari</Button>
                     </form>

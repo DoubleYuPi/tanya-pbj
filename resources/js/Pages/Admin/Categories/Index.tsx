@@ -69,8 +69,8 @@ export default function Index() {
                                         <p className="text-xs text-[var(--color-muted-foreground)]">{c.regulations_count} peraturan</p>
                                     </div>
                                     <div className="flex gap-2">
-                                        <Button size="sm" variant="ghost" onClick={() => startEdit(c)}><Pencil className="h-4 w-4" /></Button>
-                                        <Button size="sm" variant="ghost" onClick={() => destroy(c.id, c.name)}><Trash2 className="h-4 w-4 text-red-600" /></Button>
+                                        <Button size="sm" variant="ghost" onClick={() => startEdit(c)} aria-label={`Edit kategori ${c.name}`}><Pencil className="h-4 w-4" /></Button>
+                                        <Button size="sm" variant="ghost" onClick={() => destroy(c.id, c.name)} aria-label={`Hapus kategori ${c.name}`}><Trash2 className="h-4 w-4 text-red-600" /></Button>
                                     </div>
                                 </li>
                             ))}

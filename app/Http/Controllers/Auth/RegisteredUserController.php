@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -19,11 +20,14 @@ class RegisteredUserController extends Controller
     {
         return Inertia::render('Auth/Register', [
             'satuanKerjaOptions' => config('satuan_kerja.list'),
+            'registrationEnabled' => Setting::getBool('registration_enabled', true),
         ]);
     }
 
     public function store(Request $request)
     {
+        abort_unless(Setting::getBool('registration_enabled', true), 403, 'Pendaftaran akun baru sedang tidak dibuka.');
+
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],

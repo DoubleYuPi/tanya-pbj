@@ -99,7 +99,16 @@ class ChatController extends Controller
     {
         $user = $request->user();
 
-        $listQuery = Conversation::query()->with(['user', 'admin'])->orderByDesc('last_message_at');
+        // withCount here instead of querying inside summarize() per row —
+        // that was a real N+1 (one extra query per conversation in the
+        // list) before this fix (spec Part 39).
+        $listQuery = Conversation::query()
+            ->with(['user', 'admin'])
+            ->withCount(['messages as unread_count' => function ($q) use ($user) {
+                $q->where('user_id', '!=', $user->id)->whereNull('read_at');
+            }])
+            ->orderByDesc('last_message_at');
+
         $listQuery = $user->isAdmin()
             ? $listQuery->where('admin_id', $user->id)
             : $listQuery->where('user_id', $user->id);
@@ -109,7 +118,7 @@ class ChatController extends Controller
         $activeData = null;
 
         if ($active) {
-            $active->load(['messages.sender', 'messages.attachments']);
+            $active->load(['user.adminProfile', 'admin.adminProfile', 'messages.sender', 'messages.attachments']);
 
             $activeData = [
                 'id' => $active->id,
@@ -144,14 +153,13 @@ class ChatController extends Controller
     private function summarize(Conversation $c, User $viewer): array
     {
         $counterpart = $c->counterpart($viewer);
-        $unreadCount = $c->messages()->where('user_id', '!=', $viewer->id)->whereNull('read_at')->count();
 
         return [
             'id' => $c->id,
             'counterpart_name' => $counterpart?->name ?? 'Belum ditugaskan',
             'status' => $c->status,
             'last_message_at' => $c->last_message_at?->diffForHumans(),
-            'unread_count' => $unreadCount,
+            'unread_count' => $c->unread_count,
         ];
     }
 

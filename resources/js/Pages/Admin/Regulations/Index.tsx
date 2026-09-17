@@ -57,7 +57,7 @@ export default function Index() {
             </div>
 
             <form onSubmit={submitSearch} className="mt-4 flex max-w-md gap-2">
-                <Input placeholder="Cari judul peraturan..." value={search} onChange={(e) => setSearch(e.target.value)} />
+                <Input placeholder="Cari judul peraturan..." aria-label="Cari judul peraturan" value={search} onChange={(e) => setSearch(e.target.value)} />
                 <Button type="submit" variant="outline">Cari</Button>
             </form>
 
@@ -89,12 +89,12 @@ export default function Index() {
                                 <td className="px-4 py-3">
                                     <div className="flex justify-end gap-2">
                                         <Button size="sm" variant="ghost" asChild>
-                                            <a href={route('admin.regulations.download', r.id)}><Download className="h-4 w-4" /></a>
+                                            <a href={route('admin.regulations.download', r.id)} aria-label={`Unduh ${r.title}`}><Download className="h-4 w-4" /></a>
                                         </Button>
                                         <Button size="sm" variant="ghost" asChild>
-                                            <Link href={route('admin.regulations.edit', r.id)}><Pencil className="h-4 w-4" /></Link>
+                                            <Link href={route('admin.regulations.edit', r.id)} aria-label={`Edit ${r.title}`}><Pencil className="h-4 w-4" /></Link>
                                         </Button>
-                                        <Button size="sm" variant="ghost" onClick={() => destroy(r.id, r.title)}>
+                                        <Button size="sm" variant="ghost" onClick={() => destroy(r.id, r.title)} aria-label={`Hapus ${r.title}`}>
                                             <Trash2 className="h-4 w-4 text-red-600" />
                                         </Button>
                                     </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Setting;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SendMessageRequest extends FormRequest
@@ -13,7 +14,7 @@ class SendMessageRequest extends FormRequest
 
     public function rules(): array
     {
-        $maxKb = (int) env('ATTACHMENT_MAX_UPLOAD_MB', 10) * 1024;
+        $maxKb = (int) Setting::get('attachment_max_upload_mb', env('ATTACHMENT_MAX_UPLOAD_MB', 10)) * 1024;
 
         return [
             'body' => ['required', 'string', 'max:5000'],

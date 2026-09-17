@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use App\Models\Regulation;
+use App\Models\Setting;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -15,7 +16,7 @@ class StoreRegulationRequest extends FormRequest
 
     public function rules(): array
     {
-        $maxKb = (int) env('REGULATION_MAX_UPLOAD_MB', 25) * 1024;
+        $maxKb = (int) Setting::get('regulation_max_upload_mb', env('REGULATION_MAX_UPLOAD_MB', 25)) * 1024;
 
         return [
             'regulation_category_id' => ['required', 'exists:regulation_categories,id'],

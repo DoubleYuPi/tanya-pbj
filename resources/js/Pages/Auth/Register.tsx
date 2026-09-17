@@ -6,7 +6,7 @@ import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
 
-export default function Register({ satuanKerjaOptions }: { satuanKerjaOptions: string[] }) {
+export default function Register({ satuanKerjaOptions, registrationEnabled }: { satuanKerjaOptions: string[]; registrationEnabled: boolean }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
@@ -20,6 +20,21 @@ export default function Register({ satuanKerjaOptions }: { satuanKerjaOptions: s
         e.preventDefault();
         post(route('register'), { onFinish: () => reset('password', 'password_confirmation') });
     };
+
+    if (!registrationEnabled) {
+        return (
+            <GuestLayout>
+                <Head title="Daftar" />
+                <h1 className="text-xl font-bold text-[var(--color-navy-700)]">Pendaftaran Sedang Ditutup</h1>
+                <p className="mt-2 text-sm text-[var(--color-muted-foreground)]">
+                    Pendaftaran akun baru sedang tidak dibuka saat ini. Silakan coba lagi nanti.
+                </p>
+                <Button className="mt-4 w-full" asChild>
+                    <Link href={route('login')}>Kembali ke Halaman Masuk</Link>
+                </Button>
+            </GuestLayout>
+        );
+    }
 
     return (
         <GuestLayout>

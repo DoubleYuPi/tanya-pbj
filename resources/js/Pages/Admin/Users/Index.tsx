@@ -40,7 +40,7 @@ export default function Index() {
             <h1 className="text-2xl font-bold text-[var(--color-navy-700)]">Manajemen Pengguna</h1>
 
             <form onSubmit={submitSearch} className="mt-4 flex max-w-md gap-2">
-                <Input placeholder="Cari nama, email, atau satuan kerja..." value={search} onChange={(e) => setSearch(e.target.value)} />
+                <Input placeholder="Cari nama, email, atau satuan kerja..." aria-label="Cari nama, email, atau satuan kerja" value={search} onChange={(e) => setSearch(e.target.value)} />
                 <Button type="submit" variant="outline">Cari</Button>
             </form>
 
@@ -74,7 +74,7 @@ export default function Index() {
                                 <td className="px-4 py-3">
                                     <div className="flex justify-end gap-2">
                                         <Button size="sm" variant="ghost" asChild>
-                                            <Link href={route('admin.users.show', u.id)}><Eye className="h-4 w-4" /></Link>
+                                            <Link href={route('admin.users.show', u.id)} aria-label={`Lihat detail ${u.name}`}><Eye className="h-4 w-4" /></Link>
                                         </Button>
                                         <Button size="sm" variant="ghost" onClick={() => toggleActive(u)} aria-label={u.is_active ? 'Nonaktifkan' : 'Aktifkan'}>
                                             <Power className={`h-4 w-4 ${u.is_active ? 'text-red-600' : 'text-emerald-600'}`} />
