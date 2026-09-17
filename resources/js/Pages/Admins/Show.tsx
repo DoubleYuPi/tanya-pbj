@@ -1,8 +1,12 @@
-import { Head, usePage } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import { FormEventHandler } from 'react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { Button } from '@/Components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
 import { Badge } from '@/Components/ui/badge';
+import { Textarea } from '@/Components/ui/textarea';
+import InputError from '@/Components/InputError';
+import { PageProps } from '@/types';
 import { Circle, MessageCircleQuestion } from 'lucide-react';
 
 interface AdminDetail {
@@ -34,7 +38,17 @@ const STATUS_COLOR: Record<string, string> = {
 };
 
 export default function Show() {
-    const { admin, stats } = usePage<{ admin: AdminDetail; stats: Stats }>().props;
+    const { auth, admin, stats } = usePage<PageProps<{ admin: AdminDetail; stats: Stats }>>().props;
+
+    const { data, setData, post, processing, errors } = useForm({
+        admin_id: admin.id,
+        message: '',
+    });
+
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+        post(route('chat.store'));
+    };
 
     return (
         <PublicLayout>
@@ -83,9 +97,27 @@ export default function Show() {
                             </div>
                         </dl>
 
-                        <Button className="mt-6 w-full" disabled title="Fitur chat akan segera hadir">
-                            <MessageCircleQuestion className="h-4 w-4" /> Mulai Konsultasi (Segera Hadir)
-                        </Button>
+                        {!auth.user ? (
+                            <Button className="mt-6 w-full" asChild>
+                                <Link href={route('login')}>Masuk untuk Mulai Konsultasi</Link>
+                            </Button>
+                        ) : auth.user.role === 'user' ? (
+                            <form onSubmit={submit} className="mt-6 space-y-3 border-t border-[var(--color-border)] pt-6">
+                                <label htmlFor="message" className="text-sm font-medium">
+                                    Mulai Konsultasi
+                                </label>
+                                <Textarea
+                                    id="message"
+                                    placeholder="Tuliskan pertanyaan Anda mengenai Pengadaan Barang/Jasa..."
+                                    value={data.message}
+                                    onChange={(e) => setData('message', e.target.value)}
+                                />
+                                <InputError message={errors.message} />
+                                <Button type="submit" className="w-full" disabled={processing || !data.message.trim()}>
+                                    <MessageCircleQuestion className="h-4 w-4" /> Kirim Pertanyaan
+                                </Button>
+                            </form>
+                        ) : null}
                     </CardContent>
                 </Card>
             </div>

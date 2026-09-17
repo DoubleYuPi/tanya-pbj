@@ -72,4 +72,19 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(Regulation::class, 'user_bookmarks')->withTimestamps();
     }
+
+    public function conversationsAsUser(): HasMany
+    {
+        return $this->hasMany(Conversation::class, 'user_id');
+    }
+
+    public function conversationsAsAdmin(): HasMany
+    {
+        return $this->hasMany(Conversation::class, 'admin_id');
+    }
+
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class);
+    }
 }

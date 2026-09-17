@@ -6,7 +6,9 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use App\Models\Conversation;
 use App\Models\Regulation;
+use App\Policies\ConversationPolicy;
 use App\Policies\RegulationPolicy;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
@@ -32,7 +34,6 @@ class AppServiceProvider extends ServiceProvider
         Event::listen(Registered::class, SendEmailVerificationNotification::class);
 
         Gate::policy(Regulation::class, RegulationPolicy::class);
-
-        // Gate::policy(Conversation::class, ...) lands here in Phase 5.
+        Gate::policy(Conversation::class, ConversationPolicy::class);
     }
 }

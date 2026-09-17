@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\RegulationCategoryController;
 use App\Http\Controllers\Admin\RegulationController as AdminRegulationController;
 use App\Http\Controllers\AdminDirectoryController;
 use App\Http\Controllers\BookmarkController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegulationController;
@@ -52,14 +53,32 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Attachment downloads are shared across both /chat and /admin/chat —
+    // ConversationPolicy inside the controller handles authorization
+    // regardless of which side is requesting, so one route covers both.
+    Route::get('/chat/attachments/{attachment}/download', [ChatController::class, 'downloadAttachment'])->name('chat.attachments.download');
+});
+
+/*
+|--------------------------------------------------------------------------
+| User chat routes (spec Part 16-19, 41). role:user only — Admin uses the
+| mirrored /admin/chat group below via the same ChatController.
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
+    Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
+    Route::get('/chat/{conversation}', [ChatController::class, 'show'])->name('chat.show');
+    Route::post('/chat', [ChatController::class, 'store'])->name('chat.store');
+    Route::post('/chat/{conversation}/messages', [ChatController::class, 'storeMessage'])->name('chat.messages.store');
+    Route::post('/chat/{conversation}/resolve', [ChatController::class, 'resolve'])->name('chat.resolve');
+    Route::post('/chat/{conversation}/reopen', [ChatController::class, 'reopen'])->name('chat.reopen');
 });
 
 /*
 |--------------------------------------------------------------------------
 | Reserved route groups per the spec's route map (Part 41).
 | Controllers/pages for these land in later phases:
-|   /chat, /chat/{conversation}                                 → Phase 5
-|   /admin/chat, /admin/chat/{conversation}                     → Phase 5
 |   /admin/users, /admin/admins, /admin/audit-logs, /admin/settings → Phase 7
 |
 | Note: the spec's Part 29 and Part 30 both assign "/admin/dashboard" to
@@ -76,6 +95,12 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     Route::get('/profile', [AdminProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [AdminProfileController::class, 'update'])->name('profile.update');
     Route::patch('/availability', [AdminProfileController::class, 'updateStatus'])->name('availability.update');
+
+    Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
+    Route::get('/chat/{conversation}', [ChatController::class, 'show'])->name('chat.show');
+    Route::post('/chat/{conversation}/messages', [ChatController::class, 'storeMessage'])->name('chat.messages.store');
+    Route::post('/chat/{conversation}/resolve', [ChatController::class, 'resolve'])->name('chat.resolve');
+    Route::post('/chat/{conversation}/reopen', [ChatController::class, 'reopen'])->name('chat.reopen');
 });
 
 /*

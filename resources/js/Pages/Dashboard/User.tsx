@@ -12,9 +12,15 @@ interface AvailableAdmin {
     organization: string | null;
 }
 
+interface Stats {
+    savedRegulations: number;
+    activeConversations: number;
+    resolvedConversations: number;
+}
+
 export default function UserDashboard() {
     const { auth, stats, availableAdmins } = usePage<PageProps<{
-        stats: { savedRegulations: number };
+        stats: Stats;
         availableAdmins: AvailableAdmin[];
     }>>().props;
 
@@ -32,11 +38,11 @@ export default function UserDashboard() {
             <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <Card>
                     <CardHeader><CardTitle className="text-sm text-[var(--color-muted-foreground)]">Konsultasi Aktif</CardTitle></CardHeader>
-                    <CardContent><p className="text-3xl font-bold">0</p></CardContent>
+                    <CardContent><p className="text-3xl font-bold">{stats.activeConversations}</p></CardContent>
                 </Card>
                 <Card>
                     <CardHeader><CardTitle className="text-sm text-[var(--color-muted-foreground)]">Konsultasi Selesai</CardTitle></CardHeader>
-                    <CardContent><p className="text-3xl font-bold">0</p></CardContent>
+                    <CardContent><p className="text-3xl font-bold">{stats.resolvedConversations}</p></CardContent>
                 </Card>
                 <Card>
                     <CardHeader><CardTitle className="text-sm text-[var(--color-muted-foreground)]">Peraturan Tersimpan</CardTitle></CardHeader>
@@ -51,7 +57,9 @@ export default function UserDashboard() {
                 <Button variant="outline" asChild>
                     <Link href={route('regulations.index')}><ScrollText className="h-4 w-4" /> Cari Peraturan</Link>
                 </Button>
-                <Button variant="outline"><History className="h-4 w-4" /> Riwayat Konsultasi</Button>
+                <Button variant="outline" asChild>
+                    <Link href={route('chat.index')}><History className="h-4 w-4" /> Riwayat Konsultasi</Link>
+                </Button>
                 <Button variant="outline" asChild>
                     <Link href={route('regulations.bookmarks')}><Bookmark className="h-4 w-4" /> Peraturan Tersimpan</Link>
                 </Button>

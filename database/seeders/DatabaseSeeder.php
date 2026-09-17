@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             RegulationCategorySeeder::class,
             RegulationSeeder::class,
             AdminSeeder::class,
+            ConversationSeeder::class,
         ]);
     }
 }

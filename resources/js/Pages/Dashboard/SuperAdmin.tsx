@@ -4,16 +4,23 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
 import { Button } from '@/Components/ui/button';
 import { PageProps } from '@/types';
 
+interface Stats {
+    totalRegulations: number;
+    activeConversations: number;
+    resolvedConversations: number;
+    totalQuestions: number;
+}
+
 export default function SuperAdminDashboard() {
-    const { auth, stats } = usePage<PageProps<{ stats: { totalRegulations: number } }>>().props;
+    const { auth, stats } = usePage<PageProps<{ stats: Stats }>>().props;
 
     const cards: [string, number | string][] = [
         ['Total Users', '—'],
         ['Total Admins', '—'],
-        ['Konsultasi Aktif', '—'],
-        ['Konsultasi Selesai', '—'],
+        ['Konsultasi Aktif', stats.activeConversations],
+        ['Konsultasi Selesai', stats.resolvedConversations],
         ['Total Peraturan', stats.totalRegulations],
-        ['Total Pertanyaan', '—'],
+        ['Total Pertanyaan', stats.totalQuestions],
     ];
 
     return (
