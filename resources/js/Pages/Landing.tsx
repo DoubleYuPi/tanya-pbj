@@ -33,10 +33,10 @@ export default function Landing() {
                         </Button>
                     </div>
 
-                    <form action={route('regulations.index')} method="get" className="mx-auto mt-8 flex max-w-xl items-center gap-2 rounded-xl bg-white p-2 shadow-lg">
+                    <form action={route('search')} method="get" className="mx-auto mt-8 flex max-w-xl items-center gap-2 rounded-xl bg-white p-2 shadow-lg">
                         <Search className="ml-2 h-5 w-5 text-[var(--color-muted-foreground)]" />
                         <Input
-                            name="search"
+                            name="q"
                             className="border-0 shadow-none focus-visible:ring-0"
                             placeholder="Cari peraturan, nomor, topik, atau kata kunci..."
                         />

@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreRegulationRequest;
 use App\Http\Requests\Admin\UpdateRegulationRequest;
+use App\Models\AuditLog;
 use App\Models\Regulation;
 use App\Models\RegulationCategory;
 use App\Models\Tag;
+use App\Services\AuditLogger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -70,6 +72,8 @@ class RegulationController extends Controller
             return $regulation;
         });
 
+        AuditLogger::log(AuditLog::ACTION_REGULATION_CREATED, "Mengunggah peraturan \"{$regulation->title}\"", $regulation);
+
         return to_route('admin.regulations.index')->with('success', "Peraturan \"{$regulation->title}\" berhasil diunggah.");
     }
 
@@ -108,6 +112,8 @@ class RegulationController extends Controller
             $this->syncTags($regulation, $validated['tags'] ?? []);
         });
 
+        AuditLogger::log(AuditLog::ACTION_REGULATION_UPDATED, "Memperbarui peraturan \"{$regulation->title}\"", $regulation);
+
         return to_route('admin.regulations.index')->with('success', "Peraturan \"{$regulation->title}\" berhasil diperbarui.");
     }
 
@@ -117,7 +123,11 @@ class RegulationController extends Controller
 
         // Soft delete keeps the audit trail and the file on disk; a
         // permanent-delete/cleanup job is out of scope for this phase.
+        $title = $regulation->title;
+
         $regulation->delete();
+
+        AuditLogger::log(AuditLog::ACTION_REGULATION_DELETED, "Menghapus peraturan \"{$title}\"", $regulation);
 
         return to_route('admin.regulations.index')->with('success', 'Peraturan berhasil dihapus.');
     }

@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminManagementController;
 use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\AuditLogController;
 use App\Http\Controllers\Admin\RegulationCategoryController;
 use App\Http\Controllers\Admin\RegulationController as AdminRegulationController;
+use App\Http\Controllers\Admin\StatisticsController;
+use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\AdminDirectoryController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\ChatController;
@@ -10,6 +14,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegulationController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -32,6 +37,9 @@ Route::get('/admins/{admin}', [AdminDirectoryController::class, 'show'])->name('
 // above the bookmarks route so "/peraturan/tersimpan" isn't swallowed by
 // the "/peraturan/{regulation}" wildcard.
 Route::get('/peraturan', [RegulationController::class, 'index'])->name('regulations.index');
+
+// Global search across regulations + admins (spec Part 25).
+Route::get('/cari', [SearchController::class, 'index'])->name('search');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/peraturan/tersimpan', [BookmarkController::class, 'index'])->name('regulations.bookmarks');
@@ -83,7 +91,7 @@ Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
 |--------------------------------------------------------------------------
 | Reserved route groups per the spec's route map (Part 41).
 | Controllers/pages for these land in later phases:
-|   /admin/users, /admin/admins, /admin/audit-logs, /admin/settings → Phase 7
+|   /admin/settings → not yet implemented (Phase 8 / future)
 |
 | Note: the spec's Part 29 and Part 30 both assign "/admin/dashboard" to
 | two different roles (Super Admin and Admin). Resolved here by following
@@ -122,6 +130,19 @@ Route::middleware(['auth', 'verified', 'role:super_admin'])->prefix('admin')->na
     Route::put('/peraturan/{regulation}', [AdminRegulationController::class, 'update'])->name('regulations.update');
     Route::delete('/peraturan/{regulation}', [AdminRegulationController::class, 'destroy'])->name('regulations.destroy');
     Route::get('/peraturan/{regulation}/download', [AdminRegulationController::class, 'download'])->name('regulations.download');
+
+    Route::get('/users', [UserManagementController::class, 'index'])->name('users.index');
+    Route::get('/users/{user}', [UserManagementController::class, 'show'])->name('users.show');
+    Route::patch('/users/{user}/toggle-active', [UserManagementController::class, 'toggleActive'])->name('users.toggleActive');
+
+    Route::get('/admins', [AdminManagementController::class, 'index'])->name('admins.index');
+    Route::get('/admins/create', [AdminManagementController::class, 'create'])->name('admins.create');
+    Route::post('/admins', [AdminManagementController::class, 'store'])->name('admins.store');
+    Route::get('/admins/{admin}/edit', [AdminManagementController::class, 'edit'])->name('admins.edit');
+    Route::put('/admins/{admin}', [AdminManagementController::class, 'update'])->name('admins.update');
+
+    Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('audit-logs.index');
+    Route::get('/statistics', [StatisticsController::class, 'index'])->name('statistics.index');
 
     Route::get('/categories', [RegulationCategoryController::class, 'index'])->name('categories.index');
     Route::post('/categories', [RegulationCategoryController::class, 'store'])->name('categories.store');
