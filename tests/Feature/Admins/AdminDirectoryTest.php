@@ -61,7 +61,7 @@ class AdminDirectoryTest extends TestCase
             'name' => $admin->name,
             'position' => 'Procurement Specialist',
             'organization' => 'UKPBJ Kota Pontianak',
-            'expertise' => 'Tender, E-Katalog',
+            'expertise' => ['Tender', 'E-Katalog'],
             'status' => 'online',
         ]);
 

@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Regulation;
+use App\Models\RegulationCategory;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -35,6 +37,11 @@ class RegulationFactory extends Factory
         Storage::disk('regulations')->put($storedName, self::placeholderPdfBytes());
 
         return [
+            // Both columns are NOT NULL at the DB level — defaulted here
+            // via nested factories so `Regulation::factory()->create()`
+            // works standalone; callers can still override either.
+            'regulation_category_id' => RegulationCategory::factory(),
+            'uploaded_by' => User::factory()->state(['role' => User::ROLE_SUPER_ADMIN]),
             'title' => "Peraturan Presiden Nomor {$number} Tahun {$year} tentang Pengadaan Barang/Jasa Pemerintah (DATA CONTOH)",
             'document_number' => (string) $number,
             'year' => $year,

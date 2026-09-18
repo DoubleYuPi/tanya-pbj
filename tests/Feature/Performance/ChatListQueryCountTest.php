@@ -27,6 +27,7 @@ class ChatListQueryCountTest extends TestCase
         DB::flushQueryLog();
 
         Conversation::factory()->count(8)->create(['user_id' => $user->id]);
+        DB::flushQueryLog();
         $this->actingAs($user)->get(route('chat.index'));
         $queryCountForTen = count(DB::getQueryLog());
         DB::disableQueryLog();

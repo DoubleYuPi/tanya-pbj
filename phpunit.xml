@@ -22,6 +22,11 @@
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="CACHE_DRIVER" value="array"/>
         <env name="DB_CONNECTION" value="sqlite"/>
+        <!-- Without this, any code path touching broadcast() makes a real
+             HTTP call to Reverb, which isn't running during `php artisan
+             test` — every such test would fail with a connection error
+             (found via a full test-suite run, see PHASE8_NOTES.md). -->
+        <env name="BROADCAST_CONNECTION" value="log"/>
         <env name="DB_DATABASE" value=":memory:"/>
         <env name="MAIL_MAILER" value="array"/>
         <env name="PULSE_ENABLED" value="false"/>

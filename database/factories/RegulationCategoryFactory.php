@@ -12,14 +12,20 @@ class RegulationCategoryFactory extends Factory
 
     public function definition(): array
     {
-        $name = fake()->unique()->randomElement([
+        // No fake()->unique() on the base name — that pool only has 10
+        // entries, and a long test run creating many categories would
+        // eventually exhaust it. A random numeric suffix keeps both name
+        // and slug unique indefinitely instead.
+        $base = fake()->randomElement([
             'Perpres', 'Permen', 'Peraturan LKPP', 'Perda', 'Pergub',
             'Perwali', 'Keputusan', 'Surat Edaran', 'Pedoman', 'Lainnya',
         ]);
+        $suffix = fake()->unique()->numberBetween(1, 1_000_000);
+        $name = "{$base} {$suffix}";
 
         return [
             'name' => $name,
-            'slug' => Str::slug($name).'-'.fake()->unique()->numberBetween(1, 100000),
+            'slug' => Str::slug($name),
             'description' => fake()->sentence(),
         ];
     }
