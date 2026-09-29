@@ -58,7 +58,7 @@ export default function Show() {
                 <Card>
                     <CardHeader>
                         <div className="flex items-center gap-4">
-                            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-navy-100)] text-2xl font-semibold text-[var(--color-navy-600)]">
+                            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-green-100)] text-2xl font-semibold text-[var(--color-green-600)]">
                                 {admin.name.charAt(0)}
                             </span>
                             <div>

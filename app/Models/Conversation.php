@@ -27,6 +27,7 @@ class Conversation extends Model
         'status',
         'last_message_at',
         'resolved_at',
+        'reopened_at',
     ];
 
     protected function casts(): array
@@ -34,6 +35,7 @@ class Conversation extends Model
         return [
             'last_message_at' => 'datetime',
             'resolved_at' => 'datetime',
+            'reopened_at' => 'datetime',
         ];
     }
 
@@ -57,6 +59,15 @@ class Conversation extends Model
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class)->orderBy('created_at');
+    }
+
+    public function scopeIdleSince($query, \DateTimeInterface $cutoff)
+    {
+        return $query
+            ->whereNotIn('status', [self::STATUS_RESOLVED, self::STATUS_CLOSED])
+            ->whereNotNull('last_message_at')
+            ->where('last_message_at', '<', $cutoff)
+            ->where(fn ($q) => $q->whereNull('reopened_at')->orWhere('reopened_at', '<', $cutoff));
     }
 
     public function isResolved(): bool

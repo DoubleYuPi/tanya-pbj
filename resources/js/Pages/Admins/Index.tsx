@@ -54,9 +54,9 @@ export default function Index() {
             <Head title="Pilih Admin" />
 
             <div className="mx-auto max-w-6xl px-4 py-12">
-                <h1 className="text-2xl font-bold text-[var(--color-navy-700)]">Siapa yang ingin Anda hubungi?</h1>
+                <h1 className="text-2xl font-bold text-[var(--color-green-700)]">Siapa yang ingin Anda hubungi?</h1>
                 <p className="mt-1 text-sm text-[var(--color-muted-foreground)]">
-                    Pilih admin berdasarkan bidang keahlian yang sesuai dengan pertanyaan Anda.
+                    Pilih admin sesuai dengan kebutuhan Anda.
                 </p>
 
                 <form onSubmit={submitSearch} className="mt-6 flex gap-2">
@@ -88,7 +88,7 @@ export default function Index() {
                             <Card key={admin.id}>
                                 <CardHeader>
                                     <div className="flex items-center gap-3">
-                                        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-navy-100)] text-lg font-semibold text-[var(--color-navy-600)]">
+                                        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-green-100)] text-lg font-semibold text-[var(--color-green-600)]">
                                             {admin.name.charAt(0)}
                                         </span>
                                         <div>

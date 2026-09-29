@@ -112,7 +112,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
     Route::get('/chat/{conversation}', [ChatController::class, 'show'])->name('chat.show');
     Route::post('/chat/{conversation}/messages', [ChatController::class, 'storeMessage'])->name('chat.messages.store');
-    Route::post('/chat/{conversation}/resolve', [ChatController::class, 'resolve'])->name('chat.resolve');
+    //Route::post('/chat/{conversation}/resolve', [ChatController::class, 'resolve'])->name('chat.resolve');
     Route::post('/chat/{conversation}/reopen', [ChatController::class, 'reopen'])->name('chat.reopen');
 });
 

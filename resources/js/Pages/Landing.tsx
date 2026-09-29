@@ -15,14 +15,13 @@ export default function Landing() {
         <PublicLayout>
             <Head title="Beranda" />
 
-            <section className="bg-[var(--color-navy-700)] px-4 py-20 text-white">
+            <section className="bg-[var(--color-green-700)] px-4 py-20 text-white">
                 <div className="mx-auto max-w-3xl text-center">
                     <h1 className="text-3xl font-extrabold leading-tight sm:text-5xl">
                         Temukan Jawaban Seputar Pengadaan Barang/Jasa
                     </h1>
                     <p className="mt-4 text-base text-white/80 sm:text-lg">
-                        Konsultasikan pertanyaan Anda mengenai Pengadaan Barang/Jasa Pemerintah dengan admin
-                        dan tenaga yang berpengalaman.
+                        Konsultasi/diskusikan permasalahan Anda tentang Pengadaan Barang/Jasa Pemerintah.
                     </p>
                     <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
                         <Button size="lg" variant="secondary" asChild>
@@ -46,10 +45,10 @@ export default function Landing() {
             </section>
 
             <section id="cara-kerja" className="mx-auto max-w-5xl px-4 py-16">
-                <h2 className="text-center text-2xl font-bold text-[var(--color-navy-700)]">Cara Kerja</h2>
+                <h2 className="text-center text-2xl font-bold text-[var(--color-green-700)]">Standar Operasional prosedur</h2>
                 <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-4">
                     <StepCard n={1} icon={UserCog} title="Pilih Admin" />
-                    <StepCard n={2} icon={MessageCircleQuestion} title="Tanyakan Pertanyaan" />
+                    <StepCard n={2} icon={MessageCircleQuestion} title="Ajukan Pertanyaan" />
                     <StepCard n={3} icon={Lightbulb} title="Dapatkan Jawaban" />
                     <StepCard n={4} icon={CheckCircle2} title="Temukan Solusi" />
                 </div>
@@ -60,23 +59,23 @@ export default function Landing() {
                     <FeatureCard
                         icon={MessageCircleQuestion}
                         title="Tanya Admin"
-                        description="Pilih admin sesuai bidang keahlian dan mulai konsultasi langsung."
+                        description="Pilih admin sesuai kebutuhan (Pengelolaan PBJ, LPSE, Pembinaan Advokasi PBJ) dan mulai konsultasi langsung."
                     />
                     <FeatureCard
                         icon={Search}
                         title="Peraturan"
-                        description="Telusuri Perpres, Permen, Perda, dan regulasi pengadaan lainnya."
+                        description="Perpres, Perlem, Permen, Perda, dan regulasi pengadaan lainnya."
                     />
                     <FeatureCard
                         icon={CheckCircle2}
                         title="Terpercaya"
-                        description="Dikelola oleh admin dan tenaga ahli pengadaan yang berpengalaman."
+                        description="Dikelola oleh JF PBJ dan Tenaga Pendukung PBJ."
                     />
                 </div>
             </section>
 
             <section id="peraturan" className="mx-auto max-w-6xl px-4 py-12">
-                <h2 className="text-2xl font-bold text-[var(--color-navy-700)]">Peraturan Populer</h2>
+                <h2 className="text-2xl font-bold text-[var(--color-green-700)]">Peraturan Populer</h2>
                 <p className="mt-1 text-sm text-[var(--color-muted-foreground)]">
                     Telusuri seluruh Perpres, Permen, Perda, dan regulasi pengadaan lainnya.
                 </p>
@@ -95,7 +94,7 @@ function StepCard({ n, icon: Icon, title }: { n: number; icon: typeof Search; ti
                 <Icon className="h-6 w-6" />
             </div>
             <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-[var(--color-muted-foreground)]">Langkah {n}</p>
-            <p className="mt-1 font-semibold text-[var(--color-navy-700)]">{title}</p>
+            <p className="mt-1 font-semibold text-[var(--color-green-700)]">{title}</p>
         </div>
     );
 }

@@ -6,11 +6,13 @@ import { ShieldCheck } from 'lucide-react';
 export default function ApplicationLogo({ className = '' }: { className?: string }) {
     return (
         <div className={`flex items-center gap-2 ${className}`}>
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[var(--color-primary)] text-white">
-                <ShieldCheck className="h-5 w-5" />
-            </span>
+            <img
+                src="/images/sapapbj-logopng.png"
+                alt="Logo SAPA PBJ"
+                className="h-9 w-9 object-contain"
+            />
             <span className="text-lg font-bold tracking-tight text-[var(--color-navy-700)]">
-                Tanya PBJ
+                SAPA PBJ
             </span>
         </div>
     );

@@ -20,7 +20,7 @@ export default function PublicLayout({ children }: PropsWithChildren) {
                     <nav className="hidden items-center gap-6 text-sm font-medium text-[var(--color-muted-foreground)] md:flex">
                         <Link href={route('landing')}>Beranda</Link>
                         <a href="#tanya-admin">Tanya Admin</a>
-                        <a href="#peraturan">Peraturan</a>
+                        <Link href={route('regulations.index')}>Peraturan</Link>
                         <a href="#tentang">Tentang</a>
                     </nav>
                     <div className="flex items-center gap-2">
@@ -42,7 +42,7 @@ export default function PublicLayout({ children }: PropsWithChildren) {
 
             <footer id="tentang" className="border-t border-[var(--color-border)] bg-white py-8">
                 <div className="mx-auto max-w-6xl px-4 text-sm text-[var(--color-muted-foreground)]">
-                    <p>&copy; {new Date().getFullYear()} Tanya PBJ — Konsultasi dan Informasi Pengadaan Barang/Jasa Pemerintah.</p>
+                    <p>&copy; {new Date().getFullYear()} SAPA PBJ — SENTRA AKSES PEMBINAAN & ADVOKASI PENGADAAN BARANG/JASA.</p>
                 </div>
             </footer>
         </div>

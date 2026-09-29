@@ -44,7 +44,7 @@ export default function Index() {
         <SuperAdminLayout>
             <Head title="Statistik" />
 
-            <h1 className="text-2xl font-bold text-[var(--color-navy-700)]">Statistik</h1>
+            <h1 className="text-2xl font-bold text-[var(--color-green-700)]">Statistik</h1>
 
             <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-3">
                 {cards.map(([label, value]) => (
@@ -66,7 +66,7 @@ export default function Index() {
                 </Card>
                 <Card>
                     <CardHeader><CardTitle>Peraturan Diunggah per Bulan</CardTitle></CardHeader>
-                    <CardContent><BarChart data={regulationsPerMonth} color="var(--color-navy-500)" /></CardContent>
+                    <CardContent><BarChart data={regulationsPerMonth} color="var(--color-green-500)" /></CardContent>
                 </Card>
                 <Card>
                     <CardHeader><CardTitle>Status Konsultasi</CardTitle></CardHeader>

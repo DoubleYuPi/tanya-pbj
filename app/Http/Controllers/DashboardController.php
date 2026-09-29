@@ -24,6 +24,8 @@ class DashboardController extends Controller
                     'activeConversations' => Conversation::whereNotIn('status', ['resolved', 'closed'])->count(),
                     'resolvedConversations' => Conversation::whereIn('status', ['resolved', 'closed'])->count(),
                     'totalQuestions' => Conversation::count(),
+                    'totalUsers' => User::WhereIn('role',['user'])->count(),
+                    'totalAdmins' => User::WhereIn('role',['admin'])->count(),
                 ],
             ]),
             'admin' => Inertia::render('Dashboard/Admin', [

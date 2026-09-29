@@ -37,7 +37,7 @@ export default function Index() {
         <SuperAdminLayout>
             <Head title="Manajemen Pengguna" />
 
-            <h1 className="text-2xl font-bold text-[var(--color-navy-700)]">Manajemen Pengguna</h1>
+            <h1 className="text-2xl font-bold text-[var(--color-green-700)]">Manajemen Pengguna</h1>
 
             <form onSubmit={submitSearch} className="mt-4 flex max-w-md gap-2">
                 <Input placeholder="Cari nama, email, atau satuan kerja..." aria-label="Cari nama, email, atau satuan kerja" value={search} onChange={(e) => setSearch(e.target.value)} />

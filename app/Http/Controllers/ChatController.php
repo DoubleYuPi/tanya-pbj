@@ -124,6 +124,8 @@ class ChatController extends Controller
                 'id' => $active->id,
                 'subject' => $active->subject,
                 'status' => $active->status,
+                'can_resolve' => $user->can('markResolved', $active),
+                'can_reopen' => $user->can('reopen', $active),
                 'counterpart' => $this->counterpartData($active, $user),
                 'messages' => $active->messages->map(fn ($m) => [
                     'id' => $m->id,

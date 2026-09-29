@@ -9,14 +9,16 @@ interface Stats {
     activeConversations: number;
     resolvedConversations: number;
     totalQuestions: number;
+    totalUsers: number;
+    totalAdmins: number;
 }
 
 export default function SuperAdminDashboard() {
     const { auth, stats } = usePage<PageProps<{ stats: Stats }>>().props;
 
     const cards: [string, number | string][] = [
-        ['Total Users', '—'],
-        ['Total Admins', '—'],
+        ['Total Users', stats.totalUsers],
+        ['Total Admins', stats.totalAdmins],
         ['Konsultasi Aktif', stats.activeConversations],
         ['Konsultasi Selesai', stats.resolvedConversations],
         ['Total Peraturan', stats.totalRegulations],
@@ -52,14 +54,14 @@ export default function SuperAdminDashboard() {
                 </CardContent>
             </Card>
 
-            <Card className="mt-4">
+            {/* <Card className="mt-4">
                 <CardHeader><CardTitle>Manajemen Pengguna & Statistik</CardTitle></CardHeader>
                 <CardContent>
                     <p className="text-sm text-[var(--color-muted-foreground)]">
                         Manajemen pengguna/admin, audit log, dan grafik statistik hadir di Phase 7.
                     </p>
                 </CardContent>
-            </Card>
+            </Card> */}
         </SuperAdminLayout>
     );
 }

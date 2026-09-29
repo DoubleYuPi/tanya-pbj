@@ -33,7 +33,7 @@ export default function Create() {
         <SuperAdminLayout>
             <Head title="Tambah Admin" />
 
-            <h1 className="text-2xl font-bold text-[var(--color-navy-700)]">Tambah Admin</h1>
+            <h1 className="text-2xl font-bold text-[var(--color-green-700)]">Tambah Admin</h1>
 
             <Card className="mt-6 max-w-2xl">
                 <CardHeader><CardTitle>Akun & Profil Admin</CardTitle></CardHeader>

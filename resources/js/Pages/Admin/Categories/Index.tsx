@@ -55,7 +55,7 @@ export default function Index() {
         <SuperAdminLayout>
             <Head title="Manajemen Kategori Peraturan" />
 
-            <h1 className="text-2xl font-bold text-[var(--color-navy-700)]">Manajemen Kategori Peraturan</h1>
+            <h1 className="text-2xl font-bold text-[var(--color-green-700)]">Manajemen Kategori Peraturan</h1>
 
             <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
                 <Card className="lg:col-span-2">

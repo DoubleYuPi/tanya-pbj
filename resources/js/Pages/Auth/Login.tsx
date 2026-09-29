@@ -22,7 +22,7 @@ export default function Login({ status }: { status?: string }) {
         <GuestLayout>
             <Head title="Masuk" />
 
-            <h1 className="text-xl font-bold text-[var(--color-navy-700)]">Masuk ke Akun Anda</h1>
+            <h1 className="text-xl font-bold text-[var(--color-green-700)]">Masuk ke Akun Anda</h1>
             <p className="mt-1 text-sm text-[var(--color-muted-foreground)]">
                 Konsultasikan pertanyaan seputar Pengadaan Barang/Jasa Anda.
             </p>

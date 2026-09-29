@@ -66,7 +66,7 @@ export default function DashboardShell({ navItems, children }: PropsWithChildren
                     <div className="flex items-center gap-3">
                         <NotificationBell />
                         <span className="text-sm font-medium">{auth.user?.name}</span>
-                        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-navy-100)] text-sm font-semibold text-[var(--color-navy-600)]">
+                        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-green-100)] text-sm font-semibold text-[var(--color-green-600)]">
                             {auth.user?.name?.charAt(0)}
                         </span>
                     </div>

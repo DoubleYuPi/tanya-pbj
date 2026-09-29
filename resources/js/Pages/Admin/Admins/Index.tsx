@@ -33,7 +33,7 @@ export default function Index() {
             <Head title="Manajemen Admin" />
 
             <div className="flex flex-wrap items-center justify-between gap-3">
-                <h1 className="text-2xl font-bold text-[var(--color-navy-700)]">Manajemen Admin</h1>
+                <h1 className="text-2xl font-bold text-[var(--color-green-700)]">Manajemen Admin</h1>
                 <Button asChild>
                     <Link href={route('admin.admins.create')}><Plus className="h-4 w-4" /> Tambah Admin</Link>
                 </Button>

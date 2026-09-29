@@ -8,9 +8,9 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 // but a standard, low-risk addition alongside them for these screens.
 export default function GuestLayout({ children }: PropsWithChildren) {
     return (
-        <div className="flex min-h-screen flex-col items-center justify-center bg-[var(--color-navy-900)] px-4 py-10 sm:px-6">
+        <div className="flex min-h-screen flex-col items-center justify-center bg-[var(--color-white-900)] px-4 py-10 sm:px-6">
             <Link href={route('landing')} className="mb-8">
-                <ApplicationLogo className="[&_span:last-child]:text-white" />
+                <ApplicationLogo className="[&_span:last-child]:text-green" />
             </Link>
 
             <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-xl">

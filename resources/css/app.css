@@ -8,39 +8,78 @@
 @theme {
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 
-  /* Tanya PBJ identity: professional government navy + emerald accent.
-     Original palette — not derived from any consultation-app reference
-     used for UX inspiration (spec Part 4/5). */
-  --color-navy-50: #eef2f9;
-  --color-navy-100: #d7e1f0;
-  --color-navy-500: #1e3a66;
-  --color-navy-600: #16294a;
-  --color-navy-700: #101d36;
-  --color-navy-900: #0a1424;
+  /*
+   * Tanya PBJ Identity
+   * Primary: Deep Green
+   * Background: Clean Off-White
+   * Accent: Amber
+   *
+   * Main brand color: #05532D
+   */
 
-  --color-emerald-50: #ecfdf5;
-  --color-emerald-500: #10b981;
-  --color-emerald-600: #059669;
+  /* ─────────────────────────────────────────
+     Green Palette
+     ───────────────────────────────────────── */
 
-  --color-background: #f8fafc;
-  --color-foreground: var(--color-navy-900);
+  --color-green-50: #F1F8F4;
+  --color-green-100: #DCEFE4;
+  --color-green-200: #B9DFCA;
+  --color-green-300: #8CC9A7;
+  --color-green-400: #55A979;
+  --color-green-500: #05532D;
+  --color-green-600: #044523;
+  --color-green-700: #043D21;
+  --color-green-800: #032F1A;
+  --color-green-900: #022514;
 
-  --color-primary: var(--color-navy-600);
-  --color-primary-foreground: #ffffff;
-  --color-secondary: var(--color-emerald-500);
-  --color-secondary-foreground: #ffffff;
 
-  --color-muted: #eef1f6;
-  --color-muted-foreground: #5b6579;
-  --color-border: #e2e6ee;
+  /* ─────────────────────────────────────────
+     Amber Accent
+     ───────────────────────────────────────── */
+
+  --color-amber-50: #FFFBEB;
+  --color-amber-100: #FEF3C7;
+  --color-amber-500: #F59E0B;
+  --color-amber-600: #D97706;
+
+
+  /* ─────────────────────────────────────────
+     Primary / Secondary
+     ───────────────────────────────────────── */
+
+  --color-primary: #05532D;
+  --color-primary-foreground: #FFFFFF;
+
+  --color-secondary: #F59E0B;
+  --color-secondary-foreground: #1F2937;
+
+
+  /* ─────────────────────────────────────────
+     Application Colors
+     ───────────────────────────────────────── */
+
+  --color-background: #F8FAF8;
+  --color-foreground: #1F2937;
+
+  --color-muted: #F1F5F2;
+  --color-muted-foreground: #64748B;
+
+  --color-border: #E5E7EB;
+
+
+  /* ─────────────────────────────────────────
+     Radius
+     ───────────────────────────────────────── */
 
   --radius: 0.75rem;
 }
+
 
 @layer base {
   * {
     border-color: var(--color-border);
   }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);

@@ -35,6 +35,8 @@ interface ActiveConversation {
     id: number;
     subject: string | null;
     status: string;
+    can_resolve: boolean;
+    can_reopen: boolean;
     counterpart: { id: number | null; name: string; position: string | null; status: string | null };
     messages: MessageData[];
 }
@@ -180,7 +182,7 @@ export default function ChatIndex() {
                     {!activeConversation ? (
                         <div className="flex flex-1 flex-col items-center justify-center gap-2 text-center text-sm text-[var(--color-muted-foreground)]">
                             <MessageCircleQuestion className="h-8 w-8" />
-                            <p>Pilih konsultasi di sebelah kiri, atau mulai konsultasi baru dari halaman admin.</p>
+                            <p>Pilih konsultasi di sebelah kiri, atau mulai konsultasi baru dari halaman tanya admin.</p>
                         </div>
                     ) : (
                         <>
@@ -194,12 +196,25 @@ export default function ChatIndex() {
                                         )}
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-2">
+                                {/* <div className="flex items-center gap-2">
                                     <Badge variant={STATUS_VARIANT[activeConversation.status]}>{STATUS_LABEL[activeConversation.status]}</Badge>
                                     <Button size="sm" variant="outline" onClick={toggleResolved}>
                                         {isResolved ? <RotateCcw className="h-4 w-4" /> : <CheckCircle2 className="h-4 w-4" />}
                                         {isResolved ? 'Buka Kembali' : 'Tandai Selesai'}
                                     </Button>
+                                </div> */}
+                                <div className="flex items-center gap-2">
+                                    <Badge variant={STATUS_VARIANT[activeConversation.status]}>{STATUS_LABEL[activeConversation.status]}</Badge>
+                                    {isResolved && activeConversation.can_reopen && (
+                                        <Button size="sm" variant="outline" onClick={toggleResolved}>
+                                            <RotateCcw className="h-4 w-4" /> Buka Kembali
+                                        </Button>
+                                    )}
+                                    {!isResolved && activeConversation.can_resolve && (
+                                        <Button size="sm" variant="outline" onClick={toggleResolved}>
+                                            <CheckCircle2 className="h-4 w-4" /> Tandai Selesai
+                                        </Button>
+                                    )}
                                 </div>
                             </header>
 

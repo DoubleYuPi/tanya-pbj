@@ -111,9 +111,27 @@ class ConversationService
         }
     }
 
+    public function autoResolve(Conversation $conversation): void
+    {
+        $conversation->update(['status' => Conversation::STATUS_RESOLVED, 'resolved_at' => now()]);
+
+        broadcast(new ConversationUpdated($conversation));
+
+        foreach ([$conversation->user_id, $conversation->admin_id] as $id) {
+            if ($id && $recipient = User::find($id)) {
+                $recipient->notify(new ConversationResolvedNotification($conversation, 'Sistem (otomatis, 24 jam tanpa balasan)'));
+            }
+        }
+    }
+
     public function reopen(Conversation $conversation): void
     {
-        $conversation->update(['status' => Conversation::STATUS_OPEN, 'resolved_at' => null]);
+        // reopened_at restarts the 24h auto-resolve clock.
+        $conversation->update([
+            'status' => Conversation::STATUS_OPEN,
+            'resolved_at' => null,
+            'reopened_at' => now(),
+        ]);
 
         broadcast(new ConversationUpdated($conversation))->toOthers();
     }

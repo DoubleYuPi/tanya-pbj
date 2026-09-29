@@ -38,7 +38,7 @@ export default function Index() {
         <SuperAdminLayout>
             <Head title="Audit Log" />
 
-            <h1 className="text-2xl font-bold text-[var(--color-navy-700)]">Audit Log</h1>
+            <h1 className="text-2xl font-bold text-[var(--color-green-700)]">Audit Log</h1>
             <p className="mt-1 text-sm text-[var(--color-muted-foreground)]">
                 Catatan tindakan penting yang dilakukan admin dan super admin.
             </p>

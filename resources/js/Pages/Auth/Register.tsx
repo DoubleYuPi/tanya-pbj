@@ -25,7 +25,7 @@ export default function Register({ satuanKerjaOptions, registrationEnabled }: { 
         return (
             <GuestLayout>
                 <Head title="Daftar" />
-                <h1 className="text-xl font-bold text-[var(--color-navy-700)]">Pendaftaran Sedang Ditutup</h1>
+                <h1 className="text-xl font-bold text-[var(--color-green-700)]">Pendaftaran Sedang Ditutup</h1>
                 <p className="mt-2 text-sm text-[var(--color-muted-foreground)]">
                     Pendaftaran akun baru sedang tidak dibuka saat ini. Silakan coba lagi nanti.
                 </p>
@@ -40,7 +40,7 @@ export default function Register({ satuanKerjaOptions, registrationEnabled }: { 
         <GuestLayout>
             <Head title="Daftar" />
 
-            <h1 className="text-xl font-bold text-[var(--color-navy-700)]">Buat Akun Baru</h1>
+            <h1 className="text-xl font-bold text-[var(--color-green-700)]">Buat Akun Baru</h1>
             <p className="mt-1 text-sm text-[var(--color-muted-foreground)]">
                 Daftar untuk mulai konsultasi dengan admin PBJ.
             </p>

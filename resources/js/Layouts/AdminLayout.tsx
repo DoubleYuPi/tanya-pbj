@@ -3,7 +3,7 @@ import DashboardShell, { NavItem } from '@/Components/Nav/DashboardShell';
 import { LayoutDashboard, MessageCircleQuestion, ScrollText, UserCircle } from 'lucide-react';
 
 const navItems: NavItem[] = [
-    { label: 'Dashboard', href: route('admin.dashboard'), icon: LayoutDashboard },
+    { label: 'Dashboard', href: route('dashboard'), icon: LayoutDashboard },
     { label: 'Percakapan', href: route('admin.chat.index'), icon: MessageCircleQuestion },
     { label: 'Peraturan', href: route('regulations.index'), icon: ScrollText },
     { label: 'Profil Saya', href: route('admin.profile.edit'), icon: UserCircle },

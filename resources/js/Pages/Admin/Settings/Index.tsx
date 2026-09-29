@@ -33,7 +33,7 @@ export default function Index() {
         <SuperAdminLayout>
             <Head title="Pengaturan Sistem" />
 
-            <h1 className="text-2xl font-bold text-[var(--color-navy-700)]">Pengaturan Sistem</h1>
+            <h1 className="text-2xl font-bold text-[var(--color-green-700)]">Pengaturan Sistem</h1>
 
             <Card className="mt-6 max-w-xl">
                 <CardHeader><CardTitle>Umum</CardTitle></CardHeader>

@@ -46,7 +46,7 @@ export default function Edit() {
         <AdminLayout>
             <Head title="Profil Saya" />
 
-            <h1 className="text-2xl font-bold text-[var(--color-navy-700)]">Profil Saya</h1>
+            <h1 className="text-2xl font-bold text-[var(--color-green-700)]">Profil Saya</h1>
 
             <Card className="mt-6 max-w-2xl">
                 <CardHeader><CardTitle>Informasi Profil Admin</CardTitle></CardHeader>

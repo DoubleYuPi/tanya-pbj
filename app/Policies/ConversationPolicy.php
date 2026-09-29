@@ -38,13 +38,28 @@ class ConversationPolicy
         return $isParticipant && ! $conversation->isResolved();
     }
 
+    // public function markResolved(User $user, Conversation $conversation): bool
+    // {
+    //     return ! $user->isSuperAdmin() && $this->view($user, $conversation);
+    // }
+
     public function markResolved(User $user, Conversation $conversation): bool
     {
-        return ! $user->isSuperAdmin() && $this->view($user, $conversation);
+        return ! $user->isAdmin()
+            && ! $user->isSuperAdmin()
+            && $conversation->user_id === $user->id
+            && ! $conversation->isResolved();
     }
+
+    // public function reopen(User $user, Conversation $conversation): bool
+    // {
+    //     return $this->markResolved($user, $conversation);
+    // }
 
     public function reopen(User $user, Conversation $conversation): bool
     {
-        return $this->markResolved($user, $conversation);
+        return ! $user->isSuperAdmin()
+            && $this->view($user, $conversation)
+            && $conversation->isResolved();
     }
 }
