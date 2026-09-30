@@ -56,5 +56,9 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::policy(Regulation::class, RegulationPolicy::class);
         Gate::policy(Conversation::class, ConversationPolicy::class);
+
+        if (app()->environment('production')) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
     }
 }

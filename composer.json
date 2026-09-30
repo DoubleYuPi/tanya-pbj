@@ -11,11 +11,12 @@
     "require": {
         "php": "^8.3",
         "guzzlehttp/guzzle": "^7.2",
+        "inertiajs/inertia-laravel": "^2.0",
         "laravel/framework": "^13.0",
+        "laravel/reverb": "^1.4",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^3.0",
-        "inertiajs/inertia-laravel": "^2.0",
-        "laravel/reverb": "^1.4",
+        "pusher/pusher-php-server": "^7.3",
         "tightenco/ziggy": "^2.4"
     },
     "require-dev": {
