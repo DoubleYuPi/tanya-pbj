@@ -19,7 +19,7 @@ export default function PublicLayout({ children }: PropsWithChildren) {
                     </Link>
                     <nav className="hidden items-center gap-6 text-sm font-medium text-[var(--color-muted-foreground)] md:flex">
                         <Link href={route('landing')}>Beranda</Link>
-                        <a href="#tanya-admin">Tanya Admin</a>
+                        <a href={route('login')}>Tanya Admin</a>
                         <Link href={route('regulations.index')}>Peraturan</Link>
                         <a href="#tentang">Tentang</a>
                     </nav>
