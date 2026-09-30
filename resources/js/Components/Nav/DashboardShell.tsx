@@ -25,8 +25,8 @@ export default function DashboardShell({ navItems, children }: PropsWithChildren
     return (
         <div className="flex min-h-screen bg-[var(--color-background)]">
             <aside className="hidden w-64 shrink-0 flex-col border-r border-[var(--color-border)] bg-white lg:flex">
-                <div className="flex h-16 items-center px-6">
-                    <ApplicationLogo />
+                <div className="flex h-16 items-center px-6 py-3">
+                    <ApplicationLogo responsive/>
                 </div>
                 <nav className="flex-1 space-y-1 px-3 py-4">
                     {navItems.map((item) => (
