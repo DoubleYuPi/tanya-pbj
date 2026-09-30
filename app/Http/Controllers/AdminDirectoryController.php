@@ -12,7 +12,7 @@ class AdminDirectoryController extends Controller
     // Public admin directory (spec Part 14) — "Pilih admin berdasarkan
     // bidang keahlian yang sesuai dengan pertanyaan Anda." Anyone can
     // browse; starting an actual consultation (Phase 5) will require login.
-    private const EXPERTISE_FILTERS = ['Tender', 'E-Katalog', 'Kontrak', 'Swakelola', 'Regulasi', 'Lainnya'];
+    private const EXPERTISE_FILTERS = ['LPSE', 'E-Purchasing', 'RUP', 'Pengadaan Langsung', 'Tender/Seleksi', 'Kontrak PBJ', 'Swakelola', 'Regulasi', 'Lainnya'];
 
     public function index(Request $request): Response
     {
