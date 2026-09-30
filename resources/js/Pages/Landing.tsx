@@ -2,6 +2,8 @@ import { Head, Link } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
+import { Instagram } from 'lucide-react';
+import SapaChatbot from '@/Components/SapaChatbot';
 import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
 import { Search, UserCog, MessageCircleQuestion, CheckCircle2, Lightbulb } from 'lucide-react';
 
@@ -36,8 +38,9 @@ export default function Landing() {
                         <Search className="ml-2 h-5 w-5 text-[var(--color-muted-foreground)]" />
                         <Input
                             name="q"
-                            className="border-0 shadow-none focus-visible:ring-0"
-                            placeholder="Cari peraturan, nomor, topik, atau kata kunci..." aria-label="Cari peraturan, nomor, topik, atau kata kunci"
+                            className="border-0 bg-transparent text-gray-900 shadow-none placeholder:text-gray-500 focus-visible:ring-0"
+                            placeholder="Cari peraturan, nomor, topik, atau kata kunci..." 
+                            aria-label="Cari peraturan, nomor, topik, atau kata kunci"
                         />
                         <Button type="submit">Cari</Button>
                     </form>
@@ -74,15 +77,71 @@ export default function Landing() {
                 </div>
             </section>
 
-            <section id="peraturan" className="mx-auto max-w-6xl px-4 py-12">
-                <h2 className="text-2xl font-bold text-[var(--color-green-700)]">Peraturan Populer</h2>
-                <p className="mt-1 text-sm text-[var(--color-muted-foreground)]">
-                    Telusuri seluruh Perpres, Permen, Perda, dan regulasi pengadaan lainnya.
-                </p>
-                <Button className="mt-4" variant="outline" asChild>
-                    <Link href={route('regulations.index')}>Lihat Semua Peraturan</Link>
-                </Button>
+            <section id="kontak" className="bg-[var(--color-green-700)] text-white">
+                <div className="mx-auto max-w-6xl px-4 py-12">
+                    <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-12">
+                        {/* Logo + alamat */}
+                        <div className="lg:col-span-5">
+                            <div className="flex items-center gap-4">
+                                <img
+                                    src="/images/logo-pemkotptk.png"
+                                    alt="Pemerintah Kota Pontianak"
+                                    className="h-16 w-auto object-contain"
+                                />
+                                <div className="h-14 w-px bg-white/40" aria-hidden="true" />
+                                <img
+                                    src="/images/logo-bpbj-kotak.jpg"
+                                    alt="Logo UKPBJ Kota Pontianak"
+                                    className="h-16 w-auto object-contain"
+                                />
+                            </div>
+                            <address className="mt-4 text-sm not-italic leading-relaxed text-white/90">
+                                <p className="font-semibold">Pemerintah Kota Pontianak</p>
+                                <p>Jl. Rahadi Usman No. 3</p>
+                                <p>Kota Pontianak, Kalimantan Barat, 78111</p>
+                                <p>Telp. 732570 - 733040 - 733041 - 733042</p>
+                                <p>Fax. 739616</p>
+                                <p>Email: pemkot@pontianak.go.id</p>
+                            </address>
+                        </div>
+
+
+                        {/* Link terkait */}
+                        <div className="lg:col-span-3">
+                            <h2 className="text-lg font-semibold">Link Terkait</h2>
+                            <ul className="mt-4 space-y-2">
+                                <li>
+                                    <a
+                                        href="https://www.instagram.com/ukpbj.setda.pontianak/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-2 text-sm text-white/90 transition hover:text-white hover:underline"
+                                    >
+                                        <Instagram className="h-4 w-4" />
+                                        @UKPBJ.SETDA.PONTIANAK
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        {/* Denah lokasi */}
+                        <div className="lg:col-span-4">
+                            <h2 className="text-lg font-semibold">Denah Lokasi</h2>
+                            <div className="mt-4 overflow-hidden rounded-lg border border-white/20">
+                                <iframe
+                                    title="Lokasi Kantor Wali Kota Pontianak"
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.81801439522!2d109.33558111426937!3d-0.022438035558214848!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e1d585becf4ec47%3A0x8a5679e61dee167d!2sKantor+Wali+Kota+Pontianak!5e0!3m2!1sid!2sid!4v1557899143922!5m2!1sid!2sid"
+                                    className="h-56 w-full border-0"
+                                    loading="lazy"
+                                    allowFullScreen
+                                    referrerPolicy="no-referrer-when-downgrade"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
+            <SapaChatbot />
         </PublicLayout>
     );
 }
