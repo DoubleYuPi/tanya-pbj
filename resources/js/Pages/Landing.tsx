@@ -4,6 +4,7 @@ import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
 import { Instagram } from 'lucide-react';
 import SapaChatbot from '@/Components/SapaChatbot';
+import HeroSlideshow, { HeroSlide } from '@/Components/HeroSlideshow';
 import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
 import { Search, UserCog, MessageCircleQuestion, CheckCircle2, Lightbulb } from 'lucide-react';
 
@@ -12,40 +13,40 @@ import { Search, UserCog, MessageCircleQuestion, CheckCircle2, Lightbulb } from 
 // figures once the regulation library (Phase 3) and chat (Phase 5) exist,
 // per the "do not hard-code data that should come from the database"
 // rule for anything beyond this initial scaffold.
-export default function Landing() {
+export default function Landing({ slides = [] }: { slides?: HeroSlide[] }) {
     return (
         <PublicLayout>
             <Head title="Beranda" />
 
-            <section className="bg-[var(--color-green-700)] px-4 py-20 text-white">
-                <div className="mx-auto max-w-3xl text-center">
-                    <h1 className="text-3xl font-extrabold leading-tight sm:text-5xl">
-                        Temukan Jawaban Seputar Pengadaan Barang/Jasa
-                    </h1>
-                    <p className="mt-4 text-base text-white/80 sm:text-lg">
-                        Konsultasi/diskusikan permasalahan Anda tentang Pengadaan Barang/Jasa Pemerintah.
-                    </p>
-                    <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-                        <Button size="lg" variant="secondary" asChild>
-                            <Link href={route('register')}>Mulai Konsultasi</Link>
-                        </Button>
-                        <Button size="lg" variant="outline" className="bg-transparent text-white hover:bg-white/10" asChild>
-                            <Link href={route('regulations.index')}>Cari Peraturan</Link>
-                        </Button>
+            {slides.length > 0 ? (
+                <>
+                    <HeroSlideshow slides={slides} />
+                    <section className="bg-[var(--color-green-700)] px-4 py-6 text-white">
+                        <HeroSearch />
+                    </section>
+                </>
+            ) : (
+                // Fallback: original static hero when no active slides exist.
+                <section className="bg-[var(--color-green-700)] px-4 py-20 text-white">
+                    <div className="mx-auto max-w-3xl text-center">
+                        <h1 className="text-3xl font-extrabold leading-tight sm:text-5xl">
+                            Temukan Jawaban Seputar Pengadaan Barang/Jasa
+                        </h1>
+                        <p className="mt-4 text-base text-white/80 sm:text-lg">
+                            Konsultasi/diskusikan permasalahan Anda tentang Pengadaan Barang/Jasa Pemerintah.
+                        </p>
+                        <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+                            <Button size="lg" variant="secondary" asChild>
+                                <Link href={route('register')}>Mulai Konsultasi</Link>
+                            </Button>
+                            <Button size="lg" variant="outline" className="bg-transparent text-white hover:bg-white/10" asChild>
+                                <Link href={route('regulations.index')}>Cari Peraturan</Link>
+                            </Button>
+                        </div>
+                        <HeroSearch className="mt-8" />
                     </div>
-
-                    <form action={route('search')} method="get" className="mx-auto mt-8 flex max-w-xl items-center gap-2 rounded-xl bg-white p-2 shadow-lg">
-                        <Search className="ml-2 h-5 w-5 text-[var(--color-muted-foreground)]" />
-                        <Input
-                            name="q"
-                            className="border-0 bg-transparent text-gray-900 shadow-none placeholder:text-gray-500 focus-visible:ring-0"
-                            placeholder="Cari peraturan, nomor, topik, atau kata kunci..." 
-                            aria-label="Cari peraturan, nomor, topik, atau kata kunci"
-                        />
-                        <Button type="submit">Cari</Button>
-                    </form>
-                </div>
-            </section>
+                </section>
+            )}
 
             <section id="cara-kerja" className="mx-auto max-w-5xl px-4 py-16">
                 <h2 className="text-center text-2xl font-bold text-[var(--color-green-700)]">Standar Operasional prosedur</h2>
@@ -96,12 +97,11 @@ export default function Landing() {
                                 />
                             </div>
                             <address className="mt-4 text-sm not-italic leading-relaxed text-white/90">
-                                <p className="font-semibold">Pemerintah Kota Pontianak</p>
+                                <p className="font-semibold">BPBJ Sekretariat Daerah Kota Pontianak</p>
                                 <p>Jl. Rahadi Usman No. 3</p>
                                 <p>Kota Pontianak, Kalimantan Barat, 78111</p>
-                                <p>Telp. 732570 - 733040 - 733041 - 733042</p>
-                                <p>Fax. 739616</p>
-                                <p>Email: pemkot@pontianak.go.id</p>
+                                <p>Telp (HP). 0811-5675-076</p>
+                                <p>Email: blp@pontianak.go.id</p>
                             </address>
                         </div>
 
@@ -143,6 +143,21 @@ export default function Landing() {
             </section>
             <SapaChatbot />
         </PublicLayout>
+    );
+}
+
+function HeroSearch({ className = '' }: { className?: string }) {
+    return (
+        <form action={route('search')} method="get" className={`mx-auto flex max-w-xl items-center gap-2 rounded-xl bg-white p-2 shadow-lg ${className}`}>
+            <Search className="ml-2 h-5 w-5 text-[var(--color-muted-foreground)]" />
+            <Input
+                name="q"
+                className="border-0 bg-transparent text-gray-900 shadow-none placeholder:text-gray-500 focus-visible:ring-0"
+                placeholder="Cari peraturan, nomor, topik, atau kata kunci..."
+                aria-label="Cari peraturan, nomor, topik, atau kata kunci"
+            />
+            <Button type="submit">Cari</Button>
+        </form>
     );
 }
 

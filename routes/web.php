@@ -7,15 +7,21 @@ use App\Http\Controllers\Admin\RegulationCategoryController;
 use App\Http\Controllers\Admin\RegulationController as AdminRegulationController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\StatisticsController;
+use App\Http\Controllers\Admin\FaqManagementController;
+use App\Http\Controllers\Admin\HeroSlideController;
+use App\Http\Controllers\Admin\UkpbjSectionController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\AdminDirectoryController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FaqController;
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegulationController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\UkpbjProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -24,9 +30,7 @@ use Inertia\Inertia;
 | Public routes
 |--------------------------------------------------------------------------
 */
-Route::get('/', function () {
-    return Inertia::render('Landing');
-})->name('landing');
+Route::get('/', LandingController::class)->name('landing');
 
 // Admin directory (spec Part 14/15) is public browsing — only starting an
 // actual consultation (Phase 5) needs an account.
@@ -38,6 +42,10 @@ Route::get('/admins/{admin}', [AdminDirectoryController::class, 'show'])->name('
 // above the bookmarks route so "/peraturan/tersimpan" isn't swallowed by
 // the "/peraturan/{regulation}" wildcard.
 Route::get('/peraturan', [RegulationController::class, 'index'])->name('regulations.index');
+
+// Public information pages — Profil UKPBJ and FAQ (content managed by Super Admin).
+Route::get('/profil-ukpbj', [UkpbjProfileController::class, 'index'])->name('ukpbj.profile');
+Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 
 // Global search across regulations + admins (spec Part 25).
 Route::get('/cari', [SearchController::class, 'index'])->name('search');
@@ -152,6 +160,26 @@ Route::middleware(['auth', 'verified', 'role:super_admin'])->prefix('admin')->na
     Route::post('/categories', [RegulationCategoryController::class, 'store'])->name('categories.store');
     Route::put('/categories/{category}', [RegulationCategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{category}', [RegulationCategoryController::class, 'destroy'])->name('categories.destroy');
+    
+    // Slide Beranda (landing page hero slideshow)
+    Route::get('/slide-beranda', [HeroSlideController::class, 'index'])->name('slides.index');
+    Route::post('/slide-beranda', [HeroSlideController::class, 'store'])->name('slides.store');
+    Route::put('/slide-beranda/{heroSlide}', [HeroSlideController::class, 'update'])->name('slides.update');
+    Route::delete('/slide-beranda/{heroSlide}', [HeroSlideController::class, 'destroy'])->name('slides.destroy');
+
+    // Profil UKPBJ content (4 fixed sections: text + images)
+    Route::get('/profil-ukpbj', [UkpbjSectionController::class, 'index'])->name('ukpbj.index');
+    Route::get('/profil-ukpbj/{section}/edit', [UkpbjSectionController::class, 'edit'])->name('ukpbj.edit');
+    Route::put('/profil-ukpbj/{section}', [UkpbjSectionController::class, 'update'])->name('ukpbj.update');
+
+    // FAQ categories + questions
+    Route::get('/faq', [FaqManagementController::class, 'index'])->name('faq.index');
+    Route::post('/faq/kategori', [FaqManagementController::class, 'storeCategory'])->name('faq.categories.store');
+    Route::put('/faq/kategori/{faqCategory}', [FaqManagementController::class, 'updateCategory'])->name('faq.categories.update');
+    Route::delete('/faq/kategori/{faqCategory}', [FaqManagementController::class, 'destroyCategory'])->name('faq.categories.destroy');
+    Route::post('/faq/kategori/{faqCategory}/pertanyaan', [FaqManagementController::class, 'storeFaq'])->name('faq.items.store');
+    Route::put('/faq/pertanyaan/{faq}', [FaqManagementController::class, 'updateFaq'])->name('faq.items.update');
+    Route::delete('/faq/pertanyaan/{faq}', [FaqManagementController::class, 'destroyFaq'])->name('faq.items.destroy'); 
 });
 
 require __DIR__.'/auth.php';

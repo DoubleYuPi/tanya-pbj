@@ -19,9 +19,10 @@ export default function PublicLayout({ children }: PropsWithChildren) {
                     </Link>
                     <nav className="hidden items-center gap-6 text-sm font-medium text-[var(--color-muted-foreground)] md:flex">
                         <Link href={route('landing')}>Beranda</Link>
-                        <a href={route('login')}>Tanya Admin</a>
-                        <Link href={route('regulations.index')}>Peraturan</Link>
-                        <a href="#tentang">Tentang</a>
+                        <Link href={route('ukpbj.profile')}>Profil UKPBJ</Link>
+                        <Link href={route('regulations.index')}>Regulasi</Link>
+                        <Link href={route('faq.index')}>FAQ</Link>
+                        <a href="#tentang">Kontak Kami</a>
                     </nav>
                     <div className="flex items-center gap-2">
                         {auth.user ? (
@@ -36,6 +37,16 @@ export default function PublicLayout({ children }: PropsWithChildren) {
                         )}
                     </div>
                 </div>
+                <nav
+                    aria-label="Menu utama"
+                    className="flex gap-5 overflow-x-auto border-t border-[var(--color-border)] px-4 py-2 text-sm font-medium text-[var(--color-muted-foreground)] md:hidden"
+                >
+                    <Link href={route('landing')}>Beranda</Link>
+                    <Link href={route('ukpbj.profile')}>Profil UKPBJ</Link>
+                    <Link href={route('regulations.index')}>Peraturan</Link>
+                    <Link href={route('faq.index')}>FAQ</Link>
+                    <a href="#tentang">Kontak Kami</a>
+                </nav>
             </header>
 
             <main className="flex-1">{children}</main>
