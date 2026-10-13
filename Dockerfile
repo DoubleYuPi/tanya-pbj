@@ -11,7 +11,7 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /app
 COPY . .
 
-ARG VITE_APP_NAME="PBJ Konsultasi"
+ARG VITE_APP_NAME="SAPA PBJ"
 ARG VITE_PUSHER_APP_KEY
 ARG VITE_PUSHER_APP_CLUSTER=ap1
 ENV VITE_APP_NAME=$VITE_APP_NAME \
